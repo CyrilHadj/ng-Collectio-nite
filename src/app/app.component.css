@@ -1,0 +1,46 @@
+*{
+    background-color: #02182B;
+}
+/* Navbar */
+nav li a{
+    color: whitesmoke;
+    text-decoration: none;
+}
+nav {
+    list-style-type: none;
+}
+i{
+    cursor: pointer;
+    font-size: 30px;
+    padding: 30px;
+}
+
+/* Bouton nav-bar */
+button{
+    border: none;
+}
+
+button :hover{
+color: #FFD700;
+}
+
+.dropdown-menu{
+    width: 30vw;
+    height: 60vh;
+    border-top: 3px solid #FFD700;
+}
+
+.dropdown-menu li{
+   margin-top: 25px;
+}
+
+.dropdown-menu li a{
+    font-size: 25px;
+    padding-left: 25px;
+    width: 100%;
+}
+.dropdown-menu li a:hover{
+    color: #FFD700;
+}
+
+
