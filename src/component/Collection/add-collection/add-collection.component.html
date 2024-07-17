@@ -1,21 +1,20 @@
-<form>
-  <div class="form-row w-50">
-    <label for="inputEmail">Email</label>
-    <input
-      type="email"
-      class="form-control"
-      id="inputEmail"
-      placeholder="Email"
-    />
+<form [formGroup]="addCollectionGroup" (ngSubmit)="onSubmit()">
+  <label for="inputName">Name</label>
+  <input
+    formControlName="name"
+    type="name"
+    class="form-control"
+    id="inputName"
+    placeholder="name"
+  />
 
-    <label for="inputPassword">Password</label>
-    <input
-      type="password"
-      class="form-control"
-      id="inputPassword"
-      placeholder="Password"
-    />
-  </div>
+  <label for="inputDescription">Description</label>
+  <textarea
+    formControlName="description"
+    class="form-control"
+    id="inputDescription"
+    placeholder="Description"
+  ></textarea>
 
-  <button type="submit" class="btn btn-primary">Sign in</button>
+  <button type="submit" class="button-style">Add Collection</button>
 </form>

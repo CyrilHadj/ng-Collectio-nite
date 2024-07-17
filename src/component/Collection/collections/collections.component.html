@@ -1,14 +1,24 @@
+<div class="btn-container">
+  <div>
+    <button class="fa-solid fa-plus" routerLink="/add-collection"></button>
+  </div>
+</div>
+
 <div class="collections">
   @for(collection of collections; track collection.id){
+
   <div class="card" style="width: 18rem">
     <img
       class="card-img-top"
       src="https://placehold.co/600x400"
       alt="Card image cap"
     />
+
     <div class="card-body">
       <h5 class="card-title">{{ collection.name }}</h5>
     </div>
+    <button (click)="deleteCollection(collection.id)">delete</button>
   </div>
+
   }
 </div>
