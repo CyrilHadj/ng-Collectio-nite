@@ -1,5 +1,44 @@
 .collections{
     display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+    gap: 40px;
+}
+
+@media only screen and (max-width: 1380px) {
+  .collections{
     grid-template-columns: 1fr 1fr 1fr;
-    justify-items: center
+  }
+  }
+
+@media only screen and (max-width: 980px) {
+    .collections{
+      grid-template-columns: 1fr 1fr;
+}
+}
+  
+@media only screen and (max-width: 640px) {
+    .collections{
+      grid-template-columns: 1fr;
+}
+}
+
+.btn-container{
+    height: 30vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+}
+
+.btn-container button{
+    border: none;
+    font-size: 80px;
+    background-color: #02182B;
+    color: whitesmoke;
+    padding: 30px;
+    border-radius: 20px;
+}
+.btn-container button:hover{
+    color: #FFD700;
 }

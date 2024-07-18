@@ -1,4 +1,4 @@
-<form [formGroup]="addCollectionGroup" (ngSubmit)="onSubmit()">
+<form [formGroup]="updateCollectionForm" (ngSubmit)="onSubmit()">
   <label for="inputName">Name</label>
   <input
     formControlName="name"
@@ -16,5 +16,5 @@
     placeholder="Description"
   ></textarea>
 
-  <button type="submit" class="button-style">Add Collection</button>
+  <button type="submit" class="button-style">update Collection</button>
 </form>
