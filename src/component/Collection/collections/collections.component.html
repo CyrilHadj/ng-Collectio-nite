@@ -7,7 +7,11 @@
 <div class="collections">
   @for(collection of collections; track collection.id){
 
-  <div class="card" style="width: 18rem">
+  <div
+    class="card"
+    style="width: 18rem"
+    routerLink="/items/{{ collection.id }}"
+  >
     <img
       class="card-img-top"
       src="https://placehold.co/600x400"
