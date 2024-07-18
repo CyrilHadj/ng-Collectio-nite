@@ -18,6 +18,13 @@
       <h5 class="card-title">{{ collection.name }}</h5>
     </div>
     <button (click)="deleteCollection(collection.id)">delete</button>
+    <button
+      mat-button
+      class="button-style"
+      routerLink="/update-collection/{{ collection.id }}"
+    >
+      Modifier
+    </button>
   </div>
 
   }

@@ -1,0 +1,20 @@
+<form [formGroup]="updateCollectionForm" (ngSubmit)="onSubmit()">
+  <label for="inputName">Name</label>
+  <input
+    formControlName="name"
+    type="name"
+    class="form-control"
+    id="inputName"
+    placeholder="name"
+  />
+
+  <label for="inputDescription">Description</label>
+  <textarea
+    formControlName="description"
+    class="form-control"
+    id="inputDescription"
+    placeholder="Description"
+  ></textarea>
+
+  <button type="submit" class="button-style">update Collection</button>
+</form>

@@ -12,7 +12,7 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './add-collection.component.css'
 })
 export class AddCollectionComponent {
-  [x: string]: any;
+
 
   addCollectionGroup = new FormGroup({
     name : new FormControl<string>(""),
@@ -42,9 +42,11 @@ export class AddCollectionComponent {
       console.log(this.collection.name)
       console.log(this.collection)
       this.api.postCollection(this.collection)
-      .then(data=>{console.log(data)})
+      .then(data=>{
+        console.log(data)
+        this.router.navigateByUrl("/collections")
+      })
 
-      this.router.navigateByUrl("/collections")
     }
   }
 
