@@ -19,7 +19,7 @@ export class CollectionsComponent {
   }
 
 
-  getCollectionList(){
+  private getCollectionList(){
     this.api.getCollections()
     .then(collections=>{
       this.collections = collections

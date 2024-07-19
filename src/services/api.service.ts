@@ -60,4 +60,25 @@ export class ApiService {
     })
     .then(res=>res.json())
   }
+
+  public async getCollectionItems(collectionId : number){
+    return await fetch("http://localhost:8000/items/collection/" + collectionId,{
+      method : "get",
+      headers : {
+        "content-type" : "application/json",
+      },
+    })
+    .then(res=>res.json())
+  }
+
+  public async postCollectionItem(itemBody : any){
+    return await fetch("http://localhost:8000/item/collection",{
+      method : "post",
+      headers : {
+        "content-type" : "application/json"
+      },
+      body : JSON.stringify()
+    })
+    .then(res=>res.json())
+  }
 }

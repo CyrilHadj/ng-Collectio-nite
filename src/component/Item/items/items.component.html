@@ -1,1 +1,17 @@
-<p>items works!</p>
+<div class="collections">
+  @for(item of items; track item.id){
+
+  <div class="card" style="width: 18rem">
+    <img
+      class="card-img-top"
+      src="https://placehold.co/600x400"
+      alt="Card image cap"
+    />
+
+    <div class="card-body">
+      <h5 class="card-title">{{ item.name }}</h5>
+    </div>
+  </div>
+
+  }
+</div>
