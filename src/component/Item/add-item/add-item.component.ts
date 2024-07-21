@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
 import { Item } from '../../../utils/interface/Item';
+import { Collection } from '../../../utils/interface/Collection';
 
 
 @Component({
@@ -17,7 +18,9 @@ export class AddItemComponent {
     name : new FormControl<string>("")
   })
   constructor(private api : ApiService, private router : Router){}
+  collection!: Collection;
 
+  
   item : Item={
     id : 0,
     name : ""
@@ -32,5 +35,13 @@ export class AddItemComponent {
       
     }
 
+  }
+
+  @Input()set collectionId(collectionId : number){
+   this.api.getCollection(collectionId)
+   .then(collection=>{
+    this.collection = collection
+   })
+   
   }
 }
