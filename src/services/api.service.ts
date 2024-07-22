@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Collection } from '../utils/interface/Collection';
+import { Item } from '../utils/interface/Item';
 
 @Injectable({
   providedIn: 'root'
@@ -71,13 +72,13 @@ export class ApiService {
     .then(res=>res.json())
   }
  
-  public async postCollectionItem(itemAndCollectionId : any){
-    return await fetch("http://localhost:8000/item/collection",{
+  public async postCollectionItem(CollectionId : number, itemBody : Item){
+    return await fetch("http://localhost:8000/item/collection/"+ CollectionId,{
       method : "post",
       headers : {
         "content-type" : "application/json"
       },
-      body : JSON.stringify(itemAndCollectionId)
+      body : JSON.stringify(itemBody)
     })
     .then(res=>res.json())
   }

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
 import { Item } from '../../../utils/interface/Item';
@@ -14,27 +14,29 @@ import { Collection } from '../../../utils/interface/Collection';
   styleUrl: './add-item.component.css'
 })
 export class AddItemComponent {
+
   addItemGroup = new FormGroup({
-    name : new FormControl<string>("")
+    name : new FormControl<string>("",[
+      Validators.required,
+      Validators.minLength(1)
+    ])
   })
+  
   constructor(private api : ApiService, private router : Router){}
   collection!: Collection;
 
   
-  item : Item={
-    id : 0,
-    name : ""
-  }
+ 
 
   onSubmit(){
-    if(this.item){
-      if(!this.addItemGroup.value.name)return;
-      
-      this.item.name = this.addItemGroup.value.name;
-
-      
+    const item : Item={
+      id : 0,
+      name : ""
     }
+      item.name = this.addItemGroup.value.name ?? "";
 
+      this.api.postCollectionItem(this.collection.id, item)
+    
   }
 
   @Input()set collectionId(collectionId : number){

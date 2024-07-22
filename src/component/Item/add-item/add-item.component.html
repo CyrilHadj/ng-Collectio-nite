@@ -1,1 +1,12 @@
-<p>add-item works!</p>
+<form [formGroup]="addItemGroup" (ngSubmit)="onSubmit()">
+  <label for="inputName">Name</label>
+  <input
+    formControlName="name"
+    type="name"
+    class="form-control"
+    id="inputName"
+    placeholder="name"
+  />
+
+  <button type="submit" class="button-style">Add Collection</button>
+</form>
