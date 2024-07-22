@@ -8,6 +8,7 @@ nav li a{
 }
 nav {
     list-style-type: none;
+    border-bottom: 2px solid #FFD700
 }
 i{
     cursor: pointer;
@@ -27,7 +28,7 @@ color: #FFD700;
 .dropdown-menu{
     width: 30vw;
     height: 60vh;
-    border-top: 3px solid #FFD700;
+    border-bottom: 3px solid #FFD700;
 }
 
 .dropdown-menu li{

@@ -36,6 +36,10 @@ export class AddItemComponent {
       item.name = this.addItemGroup.value.name ?? "";
 
       this.api.postCollectionItem(this.collection.id, item)
+      .then(data=>{
+        console.log(data)
+        this.router.navigateByUrl("/items/"+ this.collection.id)
+      })
     
   }
 

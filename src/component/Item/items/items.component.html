@@ -7,7 +7,7 @@
   </div>
 </div>
 
-<div class="collections">
+<div class="items">
   @for(item of items; track item.id){
 
   <div class="card" style="width: 18rem">
@@ -20,6 +20,8 @@
     <div class="card-body">
       <h5 class="card-title">{{ item.name }}</h5>
     </div>
+    <button (click)="deleteItem(item.id)">delete</button>
+    <button routerLink="/update-item/{{ item.id }}">Modifier</button>
   </div>
 
   }

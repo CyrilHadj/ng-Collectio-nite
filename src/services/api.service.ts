@@ -8,7 +8,7 @@ import { Item } from '../utils/interface/Item';
 export class ApiService {
 
   constructor() { }
-
+//collection
   public async getCollections() : Promise<Collection[]>{
     return  fetch("http://localhost:8000/collections",{
       headers : {
@@ -62,6 +62,17 @@ export class ApiService {
     .then(res=>res.json())
   }
 
+//item
+public async getItemById(itemId : number) : Promise<Collection[]>{
+  return  fetch("http://localhost:8000/items",{
+    headers : {
+      "content-type" : "application/json",
+    }
+  })
+  .then(res=>res.json())
+  .catch(error=> console.log(error))
+}
+
   public async getCollectionItems(collectionId : number){
     return await fetch("http://localhost:8000/items/collection/" + collectionId,{
       method : "get",
@@ -81,5 +92,26 @@ export class ApiService {
       body : JSON.stringify(itemBody)
     })
     .then(res=>res.json())
+  }
+
+  public async deleteItem(itemId : number){
+    return await fetch("http://localhost:8000/item/"+ itemId,{
+      method : "delete",
+      headers : {
+        "content-type" : "application/json"
+      }
+    })
+    .then(res=>{res.json()})
+  }
+
+  public async updateItem(item : Item){
+    return await fetch("http://localhost:8000/item",{
+      method : "put",
+      headers : {
+        "content-type" : "application/json"
+      },
+      body : JSON.stringify(item)
+    })
+
   }
 }

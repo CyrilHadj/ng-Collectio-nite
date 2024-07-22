@@ -6,6 +6,7 @@ import { AddCollectionComponent } from '../component/Collection/add-collection/a
 import { UpdateCollectionComponent } from '../component/Collection/update-collection/update-collection.component';
 import { ItemsComponent } from '../component/Item/items/items.component';
 import { AddItemComponent } from '../component/Item/add-item/add-item.component';
+import { UpdateItemComponent } from '../component/Item/update-item/update-item.component';
 
 export const routes: Routes = [
     {path : "",component:HomeComponent},
@@ -14,5 +15,6 @@ export const routes: Routes = [
     {path : "update-collection/:collectionId",component:UpdateCollectionComponent},
     {path : "items/:collectionId",component:ItemsComponent},
     {path : "add-item/:collectionId",component:AddItemComponent},
+    {path : "update-item/:itemId",component:UpdateItemComponent},
     {path : "**",component:NotFoundComponent}
 ];

@@ -15,7 +15,21 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 export class ItemsComponent {
   collection!: Collection;
 
+  public deleteItem(itemId : number) : void{
+    this.api.deleteItem(itemId)
+    .then(data=>{
+      console.log(data)
+      this.getItems(this.collection.id)
+    })
+  }
+  
   items : Item[] = [];
+
+  private getItems(id : number){
+    this.api.getCollectionItems(id).then(items =>{
+      this.items = items
+    })
+  }
 
   constructor(private api : ApiService, private router : Router){}
   
@@ -25,10 +39,6 @@ export class ItemsComponent {
       this.collection = collection
     })
 
-
-    this.api.getCollectionItems(collectionId).then(items =>{
-      this.items = items
-    })
-
+    this.getItems(collectionId)
   }
 }
