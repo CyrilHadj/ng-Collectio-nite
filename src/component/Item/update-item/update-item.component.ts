@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 
@@ -29,5 +29,9 @@ export class UpdateItemComponent {
     if(this.item){
       
     }
+  }
+
+  @Input() set itemId(itemId : number){
+  
   }
 }
