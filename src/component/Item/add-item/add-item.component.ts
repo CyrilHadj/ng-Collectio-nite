@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
@@ -27,6 +27,7 @@ export class AddItemComponent {
 
   
  
+  public onAddItem = output<number>();
 
   onSubmit(){
     const item : Item={
@@ -38,7 +39,8 @@ export class AddItemComponent {
       this.api.postCollectionItem(this.collection.id, item)
       .then(data=>{
         console.log(data)
-        this.router.navigateByUrl("/items/"+ this.collection.id)
+        // this.router.navigateByUrl("/items/"+ this.collection.id)
+        this.onAddItem.emit(this.collection.id);
       })
     
   }

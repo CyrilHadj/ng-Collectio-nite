@@ -10,7 +10,7 @@ export class ApiService {
   constructor() { }
 //collection
   public async getCollections() : Promise<Collection[]>{
-    return  fetch("http://localhost:8000/collections",{
+    return  fetch("http://localhost:8000/collection/all",{
       headers : {
         "content-type" : "application/json",
         
@@ -63,8 +63,8 @@ export class ApiService {
   }
 
 //item
-public async getItemById(itemId : number) : Promise<Collection[]>{
-  return  fetch("http://localhost:8000/items",{
+public async getItemById(itemId : number) : Promise<Collection>{
+  return  fetch("http://localhost:8000/item/"+itemId,{
     headers : {
       "content-type" : "application/json",
     }
@@ -74,7 +74,7 @@ public async getItemById(itemId : number) : Promise<Collection[]>{
 }
 
   public async getCollectionItems(collectionId : number){
-    return await fetch("http://localhost:8000/items/collection/" + collectionId,{
+    return await fetch("http://localhost:8000/item/all/collection/" + collectionId,{
       method : "get",
       headers : {
         "content-type" : "application/json",

@@ -1,18 +1,47 @@
 import { Component, Input } from '@angular/core';
 import { Collection } from '../../../utils/interface/Collection';
 import { ApiService } from '../../../services/api.service';
-
+import {MatButtonModule} from '@angular/material/button';
 import { Item } from '../../../utils/interface/Item';
 import { Router, RouterLink, RouterModule } from '@angular/router';
+import {FormsModule} from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { AddItemComponent } from '../add-item/add-item.component';
+import { UpdateItemComponent } from '../update-item/update-item.component';
+import { UpdateCollectionComponent } from "../../Collection/update-collection/update-collection.component";
 @Component({
   selector: 'app-items',
   standalone: true,
-  imports: [RouterModule],
+  imports: [
+    RouterModule,
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    AddItemComponent,
+    UpdateItemComponent,
+    UpdateCollectionComponent
+],
+
   templateUrl: './items.component.html',
   styleUrl: './items.component.css'
 })
 export class ItemsComponent {
+
+  constructor(private api : ApiService, private router : Router,private dialog : MatDialog){}
+
+  items : Item[] = [];
   collection!: Collection;
 
   public deleteItem(itemId : number) : void{
@@ -23,15 +52,16 @@ export class ItemsComponent {
     })
   }
   
-  items : Item[] = [];
+  public submit(collectionId : number){
+    this.getItems(collectionId)
+  }
 
-  private getItems(id : number){
+  public getItems(id : number){
     this.api.getCollectionItems(id).then(items =>{
       this.items = items
     })
   }
 
-  constructor(private api : ApiService, private router : Router){}
   
   @Input() set collectionId(collectionId : number){
     this.api.getCollection(collectionId)

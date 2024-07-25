@@ -1,1 +1,13 @@
-<p>update-item works!</p>
+<form [formGroup]="updateItemForm" (ngSubmit)="onSubmit()">
+    <label for="inputName">Name</label>
+    <input
+      formControlName="name"
+      type="name"
+      class="form-control"
+      id="inputName"
+      placeholder="name"
+    />
+  
+    <button type="submit" class="button-style">update item</button>
+  </form>
+  

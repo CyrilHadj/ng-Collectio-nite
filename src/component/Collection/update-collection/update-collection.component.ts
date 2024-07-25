@@ -26,7 +26,7 @@ export class UpdateCollectionComponent {
     if(this.collection){
       this.collection.name = String(this.updateCollectionForm.value.name);
       this.collection.description = String(this.updateCollectionForm.value.description);
-      console.log(this.collection)
+      
       this.api.updateCollection(this.collection).then(data=>{
         this.router.navigateByUrl("/collections")
       })

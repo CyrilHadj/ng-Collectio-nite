@@ -21,8 +21,10 @@
       <h5 class="card-title">{{ item.name }}</h5>
     </div>
     <button (click)="deleteItem(item.id)">delete</button>
-    <button routerLink="/update-item/{{ item.id }}">Modifier</button>
+    <button routerLink="/update-item/{{ item.id }}/{{collection.id}}">Modifier</button>
   </div>
 
   }
 </div>
+
+<app-add-item [collectionId]="collection.id" (onAddItem)="submit($event)"></app-add-item>

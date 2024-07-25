@@ -15,6 +15,6 @@ export const routes: Routes = [
     {path : "update-collection/:collectionId",component:UpdateCollectionComponent},
     {path : "items/:collectionId",component:ItemsComponent},
     {path : "add-item/:collectionId",component:AddItemComponent},
-    {path : "update-item/:itemId",component:UpdateItemComponent},
+    {path : "update-item/:itemId/:collectionId",component:UpdateItemComponent},
     {path : "**",component:NotFoundComponent}
 ];
