@@ -3,20 +3,11 @@ import { Collection } from '../../../utils/interface/Collection';
 import { ApiService } from '../../../services/api.service';
 import {MatButtonModule} from '@angular/material/button';
 import { Item } from '../../../utils/interface/Item';
-import { Router, RouterLink, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
 import { AddItemComponent } from '../add-item/add-item.component';
 import { UpdateItemComponent } from '../update-item/update-item.component';
 import { UpdateCollectionComponent } from "../../Collection/update-collection/update-collection.component";
@@ -39,7 +30,7 @@ import { UpdateCollectionComponent } from "../../Collection/update-collection/up
 })
 export class ItemsComponent {
 
-  constructor(private api : ApiService, private router : Router,private dialog : MatDialog){}
+  constructor(private api : ApiService, private router : Router){}
 
   items : Item[] = [];
   collection!: Collection;

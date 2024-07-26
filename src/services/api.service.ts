@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Collection } from '../utils/interface/Collection';
 import { Item } from '../utils/interface/Item';
+import { Category } from '../utils/interface/Category';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +64,7 @@ export class ApiService {
   }
 
 //item
-public async getItemById(itemId : number) : Promise<Collection>{
+public async getItemById(itemId : number) : Promise<Item>{
   return  fetch("http://localhost:8000/item/"+itemId,{
     headers : {
       "content-type" : "application/json",
@@ -73,7 +74,7 @@ public async getItemById(itemId : number) : Promise<Collection>{
   .catch(error=> console.log(error))
 }
 
-  public async getCollectionItems(collectionId : number){
+  public async getCollectionItems(collectionId : number) : Promise<Item[]>{
     return await fetch("http://localhost:8000/item/all/collection/" + collectionId,{
       method : "get",
       headers : {
@@ -89,7 +90,9 @@ public async getItemById(itemId : number) : Promise<Collection>{
       headers : {
         "content-type" : "application/json"
       },
-      body : JSON.stringify(itemBody)
+      body : JSON.stringify({
+        name : itemBody.name
+      })
     })
     .then(res=>res.json())
   }
@@ -113,5 +116,25 @@ public async getItemById(itemId : number) : Promise<Collection>{
       body : JSON.stringify(item)
     })
 
+  }
+
+  public async postCategory(category : Category){
+    return await fetch ("http://localhost:8000/category",{
+      method : "post",
+      headers : {
+        "content-type" : "application/json"
+      },
+      body : JSON.stringify(category)
+    })
+  }
+
+  public async addCategoryToItem(itemAndCategoryId : object){
+    return await fetch ("http://localhost:8000/item/category",{
+      method : "post",
+      headers : {
+        "content-type" : "application/json"
+      },
+      body : JSON.stringify(itemAndCategoryId)
+    })
   }
 }

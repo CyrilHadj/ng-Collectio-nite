@@ -31,8 +31,9 @@ export class AddItemComponent {
 
   onSubmit(){
     const item : Item={
-      id : 0,
-      name : ""
+      id: 0,
+      name: "",
+      CategoryId: 0
     }
       item.name = this.addItemGroup.value.name ?? "";
 

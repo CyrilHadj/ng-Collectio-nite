@@ -39,6 +39,7 @@ export class UpdateItemComponent {
   @Input() set itemId(itemId : number){
     this.api.getItemById(itemId)
     .then(item=>{
+      if(this.item){}
       this.item = item
     })
   }
