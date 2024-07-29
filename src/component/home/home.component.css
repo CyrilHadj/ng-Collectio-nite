@@ -1,0 +1,24 @@
+
+
+
+ .section-1{
+    position: sticky;
+    top: 10vh;
+    background-color: #393A45;
+   
+}
+
+.section-2{
+    position: sticky;
+    top: 10vh;
+    background-color: #2C2B34;
+ 
+}
+
+
+.section-3{
+    position: sticky;
+    top: 10vh;
+    background-color: #1B1919;
+  
+}
