@@ -3,11 +3,12 @@
 }
 /* Navbar */
 nav li a{
-    color: whitesmoke;
+
     text-decoration: none;
 }
 nav {
     list-style-type: none;
+
     position: sticky;
     top: 0;
     z-index: 20;
@@ -30,7 +31,7 @@ color: #FFD700;
 .dropdown-menu{
     width: 30vw;
     height: 60vh;
-    border-top: 3px solid #FFD700;
+    border-bottom: 3px solid #FFD700;
 }
 
 .dropdown-menu li{

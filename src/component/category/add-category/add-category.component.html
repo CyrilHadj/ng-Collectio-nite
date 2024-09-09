@@ -1,0 +1,13 @@
+<h1>Ajouter une category</h1>
+
+<Form [formGroup]="addCategoryGroup" (ngSubmit)="onSubmit()">
+  <label for="name">Name</label>
+  <input
+    formControlName="name"
+    type="text"
+    class="form-control"
+    id="inputName"
+    placeholder="name"
+  />
+  <button type="submit" class="button-style">Add category</button>
+</Form>

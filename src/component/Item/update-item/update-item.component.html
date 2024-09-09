@@ -1,0 +1,30 @@
+<form [formGroup]="updateItemForm" (ngSubmit)="onSubmit()">
+    
+
+  
+  <div class="card" style="width: 18rem">
+    <img
+      class="card-img-top"
+      src="https://placehold.co/600x400"
+      alt="Card image cap"
+    />
+
+    <div class="card-body">
+      <h5 class="card-title">
+       
+        <label for="inputName">Name</label>
+        <input
+          formControlName="name"
+          type="name"
+          class="form-control"
+          id="inputName"
+          [placeholder]="item.name"
+         
+        />
+      
+        <button type="submit" class="button-style">update item</button>
+      </h5>
+    </div>
+  </div>
+
+</form>

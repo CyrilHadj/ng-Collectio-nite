@@ -1,0 +1,9 @@
+<form [formGroup]="categoryGroup" (ngSubmit)="onSubmit()">
+
+    @for(category of categories; track category.id){
+        <label for="category">{{category.name}}</label>
+        <input type="radio" id="category" name="category" formControlName="categoryId" value="{{category.id}}">
+    }
+
+<button type="submit" class="button-style">Add category to item</button>
+</form>

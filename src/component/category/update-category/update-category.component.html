@@ -1,0 +1,10 @@
+<form [formGroup]="updateCategoryForm" (ngSubmit)="onSubmit()">
+    <label for="inputName">Name</label>
+    <input 
+    formControlName="name"
+    type="name"
+    id="inputName"
+    placeholder="name"
+    >
+    <button type="submit" class="button-style">update Category</button>
+</form>

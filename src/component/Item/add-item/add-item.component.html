@@ -1,0 +1,12 @@
+<form [formGroup]="addItemGroup" (ngSubmit)="onSubmit()">
+  <label for="inputName">Name</label>
+  <input
+    formControlName="name"
+    type="text"
+    class="form-control"
+    id="inputName"
+    placeholder="name"
+  />
+
+  <button type="submit" class="button-style">Add item</button>
+</form>

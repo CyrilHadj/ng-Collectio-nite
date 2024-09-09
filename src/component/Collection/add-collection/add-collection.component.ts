@@ -32,15 +32,13 @@ export class AddCollectionComponent {
   }
 
   onSubmit(){
-    console.log("hellooo")
     if(this.collection){
       if(!this.addCollectionGroup.value.name)return;
       if(!this.addCollectionGroup.value.description)return;
 
       this.collection.name = this.addCollectionGroup.value.name;
       this.collection.description = this.addCollectionGroup.value.description;
-      console.log(this.collection.name)
-      console.log(this.collection)
+  
       this.api.postCollection(this.collection)
       .then(data=>{
         console.log(data)
