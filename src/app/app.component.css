@@ -3,12 +3,15 @@
 }
 /* Navbar */
 nav li a{
-    color: whitesmoke;
+
     text-decoration: none;
 }
 nav {
     list-style-type: none;
-    border-bottom: 2px solid #FFD700
+
+    position: sticky;
+    top: 0;
+    z-index: 20;
 }
 i{
     cursor: pointer;
