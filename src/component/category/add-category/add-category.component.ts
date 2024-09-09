@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../../utils/interface/Category';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 @Component({
   selector: 'app-add-category',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,RouterLink],
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css'
 })
@@ -31,8 +31,8 @@ export class AddCategoryComponent {
     category.name = this.addCategoryGroup.value.name ?? "";
 
     this.api.postCategory(category)
-    .then(data =>{
-      this.router.navigateByUrl("/items/"+this.collectionId)
+    .then(data=>{
+      this.router.navigateByUrl("/items/"+this.collectionID)
     })
   }
 

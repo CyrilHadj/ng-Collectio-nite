@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Collection } from '../utils/interface/Collection';
 import { Item } from '../utils/interface/Item';
 import { Category } from '../utils/interface/Category';
+import { CategoryAndItemId } from '../utils/interface/CategoryAndItemId';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ApiService {
     })
     .then(res=>res.json())
     .catch(error=> console.log(error))
-  }
+  };
 
   public async postCollection(collectionBody : Collection){
     return await fetch("http://localhost:8000/collection",{
@@ -30,7 +31,7 @@ export class ApiService {
       body: JSON.stringify(collectionBody)
     })
     .then(res=>res.json())
-  }
+  };
 
   public async deleteCollection(collectionId : number){
     return await fetch("http://localhost:8000/collection/" + collectionId,{
@@ -40,7 +41,7 @@ export class ApiService {
       },
     })
     .then(res=>res.json())
-  }
+  };
   
   public async updateCollection(collectionBody : Collection){
     return await fetch("http://localhost:8000/collection",{
@@ -51,7 +52,7 @@ export class ApiService {
       body: JSON.stringify(collectionBody)
     })
     .then(res=>res.json())
-  }
+  };
 
   public async getCollection(collectionId : number){
     return await fetch("http://localhost:8000/collection/" + collectionId,{
@@ -61,7 +62,7 @@ export class ApiService {
       },
     })
     .then(res=>res.json())
-  }
+  };
 
 //item
 public async getItemById(itemId : number) : Promise<Item>{
@@ -72,7 +73,7 @@ public async getItemById(itemId : number) : Promise<Item>{
   })
   .then(res=>res.json())
   .catch(error=> console.log(error))
-}
+};
 
   public async getCollectionItems(collectionId : number) : Promise<Item[]>{
     return await fetch("http://localhost:8000/item/all/collection/" + collectionId,{
@@ -82,7 +83,7 @@ public async getItemById(itemId : number) : Promise<Item>{
       },
     })
     .then(res=>res.json())
-  }
+  };
  
   public async postCollectionItem(CollectionId : number, itemBody : Item){
     return await fetch("http://localhost:8000/item/collection/"+ CollectionId,{
@@ -95,7 +96,7 @@ public async getItemById(itemId : number) : Promise<Item>{
       })
     })
     .then(res=>res.json())
-  }
+  };
 
   public async deleteItem(itemId : number){
     return await fetch("http://localhost:8000/item/"+ itemId,{
@@ -116,7 +117,7 @@ public async getItemById(itemId : number) : Promise<Item>{
       body : JSON.stringify(item)
     })
 
-  }
+  };
 
   public async postCategory(category : Category){
     return await fetch ("http://localhost:8000/category",{
@@ -126,9 +127,9 @@ public async getItemById(itemId : number) : Promise<Item>{
       },
       body : JSON.stringify(category)
     })
-  }
+  };
 
-  public async addCategoryToItem(itemAndCategoryId : object){
+  public async addCategoryToItem(itemAndCategoryId : CategoryAndItemId){
     return await fetch ("http://localhost:8000/item/category",{
       method : "post",
       headers : {
@@ -136,5 +137,60 @@ public async getItemById(itemId : number) : Promise<Item>{
       },
       body : JSON.stringify(itemAndCategoryId)
     })
+  };
+
+  public async getCategories() : Promise<Category[]>{
+    return await fetch("http://localhost:8000/category/all",{
+      headers : {
+        "content-type" : "application/json"
+      }
+    }
+    )
+    .then(res=>res.json())
+    .catch(error=> console.log(error))
+  }
+
+  public async getItemByCategory(categoryId : number) : Promise<Item[]>{
+    return await fetch("http://localhost:8000/item/category/" + categoryId,{
+      method : "get",
+      headers : {
+        "content-type" : "application/json"
+      }
+    })
+    .then(res=>res.json())
+    .catch(error=> console.log(error))
+  }
+
+  public async updateCategory(category : Category){
+    return await fetch("http://localhost:8000/category",{
+      method : "put",
+      headers : {
+        "content-type" : "application/json"
+      },
+      body : JSON.stringify(category)
+    })
+    .then(res=>res.json())
+    .catch(error=>console.log(error))
+  }
+
+  public async getCategoryById(categoryId : number) : Promise<Category>{
+    return await fetch("http://localhost:8000/category/" + categoryId,{
+      method : "get",
+      headers : {
+        "content-type" : "application/json"
+      },
+    })
+    .then(res=>res.json())
+    .catch(error=>console.log(error))
+  }
+
+  public async deleteCategory(categoryId : number){
+    return await fetch("http://localhost:8000/category/" + categoryId,{
+      method : "delete",
+      headers : {
+        "content-type" : "application/json"
+      },
+    })
+    .then(res=>{res.json()})
   }
 }

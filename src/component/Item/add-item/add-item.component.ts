@@ -40,7 +40,6 @@ export class AddItemComponent {
       this.api.postCollectionItem(this.collection.id, item)
       .then(data=>{
         console.log(data)
-        // this.router.navigateByUrl("/items/"+ this.collection.id)
         this.onAddItem.emit(this.collection.id);
       })
     

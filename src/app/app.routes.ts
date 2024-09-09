@@ -8,6 +8,8 @@ import { ItemsComponent } from '../component/Item/items/items.component';
 import { AddItemComponent } from '../component/Item/add-item/add-item.component';
 import { UpdateItemComponent } from '../component/Item/update-item/update-item.component';
 import { AddCategoryComponent } from '../component/category/add-category/add-category.component';
+import { UpdateCategoryComponent } from '../component/category/update-category/update-category.component';
+import { AddCategoryItemComponent } from '../component/category/add-category-item/add-category-item.component';
 
 export const routes: Routes = [
     {path : "",component:HomeComponent},
@@ -18,5 +20,7 @@ export const routes: Routes = [
     {path : "add-item/:collectionId",component:AddItemComponent},
     {path : "update-item/:itemId/:collectionId",component:UpdateItemComponent},
     {path : "add-category/:collectionId",component:AddCategoryComponent},
+    {path : "add-category-item/:itemId/:collectionId",component:AddCategoryItemComponent},
+    {path : "update-category/:categoryId/:collectionId",component:UpdateCategoryComponent},
     {path : "**",component:NotFoundComponent}
 ];
