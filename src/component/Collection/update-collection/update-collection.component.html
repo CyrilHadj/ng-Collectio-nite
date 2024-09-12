@@ -1,3 +1,5 @@
+<app-image-upload (imageEvent)="receiveUrl($event)"></app-image-upload>
+
 <form [formGroup]="updateCollectionForm" (ngSubmit)="onSubmit()">
   <label for="inputName">Name</label>
   <input

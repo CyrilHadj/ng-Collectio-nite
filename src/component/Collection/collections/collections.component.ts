@@ -33,8 +33,6 @@ export class CollectionsComponent {
     console.log(data)
     this.getCollectionList()
     })
-   
-   
   }
 
 }

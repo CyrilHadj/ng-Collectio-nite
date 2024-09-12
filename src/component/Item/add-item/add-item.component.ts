@@ -4,16 +4,25 @@ import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
 import { Item } from '../../../utils/interface/Item';
 import { Collection } from '../../../utils/interface/Collection';
-
+import { ImageUploadComponent } from '../../image/image-upload/image-upload.component';
+import { Url } from '../../../utils/interface/Url';
+import { imageItemId } from '../../../utils/interface/imageItemId';
 
 @Component({
   selector: 'app-add-item',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,ImageUploadComponent],
   templateUrl: './add-item.component.html',
   styleUrl: './add-item.component.css'
 })
 export class AddItemComponent {
+
+  imageUrl!: Url | void;
+
+  receiveUrl($event: Url){
+    console.log($event)
+    this.imageUrl = $event
+  };
 
   addItemGroup = new FormGroup({
     name : new FormControl<string>("",[
@@ -38,8 +47,12 @@ export class AddItemComponent {
       item.name = this.addItemGroup.value.name ?? "";
 
       this.api.postCollectionItem(this.collection.id, item)
-      .then(data=>{
-        console.log(data)
+      .then(item=>{
+        const imageItemId : imageItemId = {
+          itemId : item.id,
+          url : JSON.stringify(this.imageUrl)
+        }
+        this.api.postImageToItem(imageItemId)
         this.onAddItem.emit(this.collection.id);
       })
     

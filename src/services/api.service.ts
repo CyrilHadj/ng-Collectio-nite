@@ -4,6 +4,7 @@ import { Item } from '../utils/interface/Item';
 import { Category } from '../utils/interface/Category';
 import { CategoryAndItemId } from '../utils/interface/CategoryAndItemId';
 import { imageCollectionId } from '../utils/interface/imageCollectionId';
+import { imageItemId } from '../utils/interface/imageItemId';
 
 @Injectable({
   providedIn: 'root'
@@ -216,5 +217,15 @@ public async getItemById(itemId : number) : Promise<Item>{
     .then(res =>res.json())
   };
 
+  public async postImageToItem(body : imageItemId){
+    return await fetch("http://localhost:8000/image/item",{
+      method : "post",
+      body : JSON.stringify(body),
+      headers : {
+        "Content-type" : "application/json"
+      },
+    })
+    .then(res =>res.json())
+  };
 
 }

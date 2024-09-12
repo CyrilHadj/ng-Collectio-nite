@@ -4,8 +4,9 @@ import { ApiService } from '../../../services/api.service';
 import { Collection } from '../../../utils/interface/Collection';
 import { Router, RouterLink } from '@angular/router';
 import { ImageUploadComponent } from '../../image/image-upload/image-upload.component';
-import { Url } from 'url';
+
 import { imageCollectionId } from '../../../utils/interface/imageCollectionId';
+import { Url } from '../../../utils/interface/Url';
 
 @Component({
   selector: 'app-add-collection',
