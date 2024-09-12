@@ -3,20 +3,28 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { Collection } from '../../../utils/interface/Collection';
 import { Router, RouterLink } from '@angular/router';
+import { ImageUploadComponent } from '../../image/image-upload/image-upload.component';
+import { Url } from 'url';
+import { imageCollectionId } from '../../../utils/interface/imageCollectionId';
 
 @Component({
   selector: 'app-add-collection',
   standalone: true,
-  imports: [RouterLink,ReactiveFormsModule],
+  imports: [RouterLink,ReactiveFormsModule,ImageUploadComponent],
   templateUrl: './add-collection.component.html',
   styleUrl: './add-collection.component.css'
 })
 export class AddCollectionComponent {
+  imageUrl!: Url | void;
 
-
+  receiveUrl($event: Url){
+    console.log($event)
+    this.imageUrl = $event
+  }
+ 
   addCollectionGroup = new FormGroup({
     name : new FormControl<string>(""),
-    description : new FormControl<string>("")
+    description : new FormControl<string>(""),
   })
 
   constructor(private api : ApiService, private router : Router){}
@@ -38,11 +46,17 @@ export class AddCollectionComponent {
 
       this.collection.name = this.addCollectionGroup.value.name;
       this.collection.description = this.addCollectionGroup.value.description;
-  
+      
+      
       this.api.postCollection(this.collection)
-      .then(data=>{
-        console.log(data)
-        this.router.navigateByUrl("/collections")
+      .then(collection=>{
+        const imageCollectionId : imageCollectionId = {
+          collectionId : collection.id,
+          url : JSON.stringify(this.imageUrl)
+        }
+        this.api.postimageToCollection(imageCollectionId)
+        .then(res=>this.router.navigateByUrl("/collections"))
+        
       })
 
     }

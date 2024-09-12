@@ -3,6 +3,7 @@ import { Collection } from '../utils/interface/Collection';
 import { Item } from '../utils/interface/Item';
 import { Category } from '../utils/interface/Category';
 import { CategoryAndItemId } from '../utils/interface/CategoryAndItemId';
+import { imageCollectionId } from '../utils/interface/imageCollectionId';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ApiService {
   public async getCollections() : Promise<Collection[]>{
     return  fetch("http://localhost:8000/collection/all",{
       headers : {
-        "content-type" : "application/json",
+        "Content-type" : "application/json",
         
       }
     })
@@ -37,7 +38,7 @@ export class ApiService {
     return await fetch("http://localhost:8000/collection/" + collectionId,{
       method : "delete",
       headers : {
-        "content-type" : "application/json",
+        "Content-type" : "application/json",
       },
     })
     .then(res=>res.json())
@@ -58,7 +59,7 @@ export class ApiService {
     return await fetch("http://localhost:8000/collection/" + collectionId,{
       method : "get",
       headers : {
-        "content-type" : "application/json",
+        "Content-type" : "application/json",
       },
     })
     .then(res=>res.json())
@@ -68,7 +69,7 @@ export class ApiService {
 public async getItemById(itemId : number) : Promise<Item>{
   return  fetch("http://localhost:8000/item/"+itemId,{
     headers : {
-      "content-type" : "application/json",
+      "Content-type" : "application/json",
     }
   })
   .then(res=>res.json())
@@ -79,7 +80,7 @@ public async getItemById(itemId : number) : Promise<Item>{
     return await fetch("http://localhost:8000/item/all/collection/" + collectionId,{
       method : "get",
       headers : {
-        "content-type" : "application/json",
+        "Content-type" : "application/json",
       },
     })
     .then(res=>res.json())
@@ -89,7 +90,7 @@ public async getItemById(itemId : number) : Promise<Item>{
     return await fetch("http://localhost:8000/item/collection/"+ CollectionId,{
       method : "post",
       headers : {
-        "content-type" : "application/json"
+        "Content-type" : "application/json"
       },
       body : JSON.stringify({
         name : itemBody.name
@@ -102,17 +103,17 @@ public async getItemById(itemId : number) : Promise<Item>{
     return await fetch("http://localhost:8000/item/"+ itemId,{
       method : "delete",
       headers : {
-        "content-type" : "application/json"
+        "Content-type" : "application/json"
       }
     })
-    .then(res=>{res.json()})
+    .then(res=>res.json())
   }
 
   public async updateItem(item : Item){
     return await fetch("http://localhost:8000/item",{
       method : "put",
       headers : {
-        "content-type" : "application/json"
+        "Content-type" : "application/json"
       },
       body : JSON.stringify(item)
     })
@@ -123,7 +124,7 @@ public async getItemById(itemId : number) : Promise<Item>{
     return await fetch ("http://localhost:8000/category",{
       method : "post",
       headers : {
-        "content-type" : "application/json"
+        "Content-type" : "application/json"
       },
       body : JSON.stringify(category)
     })
@@ -133,7 +134,7 @@ public async getItemById(itemId : number) : Promise<Item>{
     return await fetch ("http://localhost:8000/item/category",{
       method : "post",
       headers : {
-        "content-type" : "application/json"
+        "Content-type" : "application/json"
       },
       body : JSON.stringify(itemAndCategoryId)
     })
@@ -142,7 +143,7 @@ public async getItemById(itemId : number) : Promise<Item>{
   public async getCategories() : Promise<Category[]>{
     return await fetch("http://localhost:8000/category/all",{
       headers : {
-        "content-type" : "application/json"
+        "Content-type" : "application/json"
       }
     }
     )
@@ -154,7 +155,7 @@ public async getItemById(itemId : number) : Promise<Item>{
     return await fetch("http://localhost:8000/item/category/" + categoryId,{
       method : "get",
       headers : {
-        "content-type" : "application/json"
+        "Content-type" : "application/json"
       }
     })
     .then(res=>res.json())
@@ -165,7 +166,7 @@ public async getItemById(itemId : number) : Promise<Item>{
     return await fetch("http://localhost:8000/category",{
       method : "put",
       headers : {
-        "content-type" : "application/json"
+        "Content-type" : "application/json"
       },
       body : JSON.stringify(category)
     })
@@ -177,7 +178,7 @@ public async getItemById(itemId : number) : Promise<Item>{
     return await fetch("http://localhost:8000/category/" + categoryId,{
       method : "get",
       headers : {
-        "content-type" : "application/json"
+        "Content-type" : "application/json"
       },
     })
     .then(res=>res.json())
@@ -188,9 +189,32 @@ public async getItemById(itemId : number) : Promise<Item>{
     return await fetch("http://localhost:8000/category/" + categoryId,{
       method : "delete",
       headers : {
-        "content-type" : "application/json"
+        "Content-type" : "application/json"
       },
     })
-    .then(res=>{res.json()})
+    .then(res=>res.json())
   }
+
+
+//Images
+  public async postImageToServ(formData : FormData) : Promise<any>{
+    return await fetch("http://localhost:8090/upload",{
+      method : "post",
+      body : formData,
+    })
+    .then(res=>res.json());
+  }
+
+  public async postimageToCollection(body : imageCollectionId){
+    return await fetch("http://localhost:8000/image/collection",{
+      method : "post",
+      body : JSON.stringify(body),
+      headers : {
+        "Content-type" : "application/json"
+      },
+    })
+    .then(res =>res.json())
+  };
+
+
 }

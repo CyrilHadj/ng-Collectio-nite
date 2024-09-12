@@ -10,6 +10,7 @@ import { UpdateItemComponent } from '../component/Item/update-item/update-item.c
 import { AddCategoryComponent } from '../component/category/add-category/add-category.component';
 import { UpdateCategoryComponent } from '../component/category/update-category/update-category.component';
 import { AddCategoryItemComponent } from '../component/category/add-category-item/add-category-item.component';
+import { ImageUploadComponent } from '../component/image/image-upload/image-upload.component';
 
 export const routes: Routes = [
     {path : "",component:HomeComponent},
@@ -22,5 +23,7 @@ export const routes: Routes = [
     {path : "add-category/:collectionId",component:AddCategoryComponent},
     {path : "add-category-item/:itemId/:collectionId",component:AddCategoryItemComponent},
     {path : "update-category/:categoryId/:collectionId",component:UpdateCategoryComponent},
+    {path : "image-upload",component:ImageUploadComponent},
+
     {path : "**",component:NotFoundComponent}
 ];
