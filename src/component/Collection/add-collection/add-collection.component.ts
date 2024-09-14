@@ -33,7 +33,7 @@ export class AddCollectionComponent {
     id: 0,
     name: "",
     description: "",
-    ImageId: 0
+    ImageId: 0,
   }
 
   ngOnInit(){
@@ -51,13 +51,14 @@ export class AddCollectionComponent {
       
       this.api.postCollection(this.collection)
       .then(collection=>{
+        if(this.imageUrl){
         const imageCollectionId : imageCollectionId = {
           collectionId : collection.id,
-          url : JSON.stringify(this.imageUrl)
+          url : this.imageUrl
         }
         this.api.postimageToCollection(imageCollectionId)
-        .then(res=>this.router.navigateByUrl("/collections"))
-        
+      }
+      this.router.navigateByUrl("/collections")
       })
 
     }

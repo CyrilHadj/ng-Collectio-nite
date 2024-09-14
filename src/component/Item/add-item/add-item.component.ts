@@ -48,11 +48,13 @@ export class AddItemComponent {
 
       this.api.postCollectionItem(this.collection.id, item)
       .then(item=>{
+        if(this.imageUrl){
         const imageItemId : imageItemId = {
           itemId : item.id,
-          url : JSON.stringify(this.imageUrl)
+          url : this.imageUrl
         }
         this.api.postImageToItem(imageItemId)
+      }
         this.onAddItem.emit(this.collection.id);
       })
     

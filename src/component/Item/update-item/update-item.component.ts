@@ -40,14 +40,14 @@ export class UpdateItemComponent {
       this.item.name = this.updateItemForm.value.name ?? ""
 
       this.api.updateItem(this.item).then(data=>{
-        
+        if(this.imageUrl){
         const imageItemId : imageItemId = {
           itemId : this.item.id,
           url : JSON.stringify(this.imageUrl)
         }
 
         this.api.postImageToItem(imageItemId)
-
+      }
         this.router.navigateByUrl("/items/"+this.routeCollectionId)
       })
     }

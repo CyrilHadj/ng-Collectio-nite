@@ -10,7 +10,7 @@
   <div class="card" style="width: 18rem">
     <img
       class="card-img-top"
-      src="https://placehold.co/600x400"
+      [src]="imageUrls[collection.id]"
       alt="Card image cap"
       routerLink="/items/{{ collection.id }}"
     />

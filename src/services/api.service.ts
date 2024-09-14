@@ -5,6 +5,7 @@ import { Category } from '../utils/interface/Category';
 import { CategoryAndItemId } from '../utils/interface/CategoryAndItemId';
 import { imageCollectionId } from '../utils/interface/imageCollectionId';
 import { imageItemId } from '../utils/interface/imageItemId';
+import { Url } from '../utils/interface/Url';
 
 @Injectable({
   providedIn: 'root'
@@ -194,6 +195,7 @@ public async getItemById(itemId : number) : Promise<Item>{
       },
     })
     .then(res=>res.json())
+    .catch(error=>console.log(error))
   }
 
 
@@ -203,7 +205,8 @@ public async getItemById(itemId : number) : Promise<Item>{
       method : "post",
       body : formData,
     })
-    .then(res=>res.json());
+    .then(res=>res.json())
+    .catch(error=>console.log(error))
   }
 
   public async postimageToCollection(body : imageCollectionId){
@@ -215,6 +218,18 @@ public async getItemById(itemId : number) : Promise<Item>{
       },
     })
     .then(res =>res.json())
+    .catch(error=>console.log(error))
+  };
+
+  public async getImageByCollection(collectionId : number) : Promise<Url>{
+    return await fetch("http://localhost:8000/image/collection/"+collectionId,{
+       method: "get",
+       headers : {
+        "Content-type" : "application/json"
+      },
+    })
+    .then(res=>res.json())
+    .catch(error=>console.log(error))
   };
 
   public async postImageToItem(body : imageItemId){
@@ -226,6 +241,18 @@ public async getItemById(itemId : number) : Promise<Item>{
       },
     })
     .then(res =>res.json())
+    .catch(error=>console.log(error))
   };
 
+  public async getImageByItem(itemId : number){
+    return await fetch("http://localhost:8000/image/item/"+itemId,{
+      method: "get",
+      headers : {
+        "Content-type" : "application/json"
+      }
+    })
+    .then(res=>res.json())
+    .catch(error=>console.log(error))
+  };
+  
 }

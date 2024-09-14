@@ -1,4 +1,4 @@
 export interface imageItemId{
-    url : string,
+    url : any,
     itemId: number
 }

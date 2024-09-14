@@ -1,4 +1,4 @@
 export interface imageCollectionId{
-    url : string,
+    url : any,
     collectionId: number
 }
