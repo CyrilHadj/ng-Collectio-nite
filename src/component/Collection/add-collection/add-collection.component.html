@@ -1,3 +1,5 @@
+<app-image-upload (imageEvent)="receiveUrl($event)"></app-image-upload>
+
 <form [formGroup]="addCollectionGroup" (ngSubmit)="onSubmit()">
   <label for="inputName">Name</label>
   <input
@@ -16,5 +18,7 @@
     placeholder="Description"
   ></textarea>
 
+  
   <button type="submit" class="button-style">Add Collection</button>
 </form>
+

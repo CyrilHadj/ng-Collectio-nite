@@ -3,20 +3,29 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { Collection } from '../../../utils/interface/Collection';
 import { Router, RouterLink } from '@angular/router';
+import { ImageUploadComponent } from '../../image/image-upload/image-upload.component';
+
+import { imageCollectionId } from '../../../utils/interface/imageCollectionId';
+import { Url } from '../../../utils/interface/Url';
 
 @Component({
   selector: 'app-add-collection',
   standalone: true,
-  imports: [RouterLink,ReactiveFormsModule],
+  imports: [RouterLink,ReactiveFormsModule,ImageUploadComponent],
   templateUrl: './add-collection.component.html',
   styleUrl: './add-collection.component.css'
 })
 export class AddCollectionComponent {
+  imageUrl!: Url | void;
 
-
+  receiveUrl($event: Url){
+    console.log($event)
+    this.imageUrl = $event
+  }
+ 
   addCollectionGroup = new FormGroup({
     name : new FormControl<string>(""),
-    description : new FormControl<string>("")
+    description : new FormControl<string>(""),
   })
 
   constructor(private api : ApiService, private router : Router){}
@@ -24,7 +33,7 @@ export class AddCollectionComponent {
     id: 0,
     name: "",
     description: "",
-    ImageId: 0
+    ImageId: 0,
   }
 
   ngOnInit(){
@@ -38,11 +47,18 @@ export class AddCollectionComponent {
 
       this.collection.name = this.addCollectionGroup.value.name;
       this.collection.description = this.addCollectionGroup.value.description;
-  
+      
+      
       this.api.postCollection(this.collection)
-      .then(data=>{
-        console.log(data)
-        this.router.navigateByUrl("/collections")
+      .then(collection=>{
+        if(this.imageUrl){
+        const imageCollectionId : imageCollectionId = {
+          collectionId : collection.id,
+          url : this.imageUrl
+        }
+        this.api.postimageToCollection(imageCollectionId)
+      }
+      this.router.navigateByUrl("/collections")
       })
 
     }

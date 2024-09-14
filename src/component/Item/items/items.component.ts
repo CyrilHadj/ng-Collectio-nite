@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import {Component, Input } from '@angular/core';
 import { Collection } from '../../../utils/interface/Collection';
 import { ApiService } from '../../../services/api.service';
 import {MatButtonModule} from '@angular/material/button';
@@ -12,6 +12,7 @@ import { UpdateItemComponent } from '../update-item/update-item.component';
 import { UpdateCollectionComponent } from "../../Collection/update-collection/update-collection.component";
 import { Category } from '../../../utils/interface/Category';
 import { CategoryAndItemId } from '../../../utils/interface/CategoryAndItemId';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-items',
@@ -33,59 +34,104 @@ import { CategoryAndItemId } from '../../../utils/interface/CategoryAndItemId';
 })
 export class ItemsComponent {
 
-  constructor(private api : ApiService, private router : Router){}
+  constructor(
+    private api : ApiService,
+     private router : Router,
+     private sanitizer : DomSanitizer,
+    ){}
+
   categories : Category[] = [];
   items : Item[] = [];
   collection!: Collection;
 
-  public deleteItem(itemId : number) : void{
-    this.api.deleteItem(itemId)
-    .then(data=>{
-      this.getItems(this.collection.id)
-    })
-  }
+   // Stocker les URLs d'images avec l'ID de la collection comme clé
+   imageUrls: { [key: number]: SafeUrl } = {};  
+
+   
+   ngOnInit() : void{
+     this.getCategories()
+   
+    }
+    
+
+    public async getItemImage(itemId : number){
+      try{
+      const image = await this.api.getImageByItem(itemId)
+      console.log(image[0].url)
+      const SafeUrl = this.sanitizer.bypassSecurityTrustUrl(image[0].url);
+      console.log(SafeUrl)
+      return SafeUrl;
+    }catch(error){
+      console.log("an error has occured" + error)
+      return '';
+    }
+    }
+
+    public submit(collectionId : number){
+      this.getItems(collectionId);
+      this.loadItemsAndImages(collectionId);
+    }
+
+    public getItemByCollection(collectionId : number){
+      this.api.getCollection(collectionId)
+      .then(collection=>{
+        this.collection = collection
+      })
+    }
+
+    public async loadItemsAndImages(collectionId : number) : Promise<void>{
+      try {
+        this.collection = await this.api.getCollection(collectionId);
+
+        this.items = await this.api.getCollectionItems(collectionId);
+
+        for (const item of this.items){
+          const imageUrl = await this.getItemImage(item.id)
+          this.imageUrls[item.id] = imageUrl
+        }
+
+
+      }
+      catch(error){
+        console.log(error)
+      }
+    }
+
+    @Input() set collectionId(collectionId : number){
+      this.loadItemsAndImages(collectionId);
+    }
   
-  ngOnInit() : void{
-    this.getCategories()
-  }
-
-  public submit(collectionId : number){
-    this.getItems(collectionId)
-  }
-  @Input() set collectionId(collectionId : number){
-    this.api.getCollection(collectionId)
-    .then(collection=>{
-      this.collection = collection
-    })
-
-    this.getItems(collectionId)
-  }
-
   //Méthodes
-    public getItems(id : number){
-      this.api.getCollectionItems(id).then(items =>{
+  public getItems(id : number) : Promise<any>{
+    return this.api.getCollectionItems(id).then(items =>{
         this.items = items
       })
     }
-  
+    
     public getCategories(){
       this.api.getCategories().then(categories =>{
         this.categories = categories
       })
     }
-
+    
     public showItemByCategory(CategoryId : number){
       this.api.getItemByCategory(CategoryId).then(items =>{
         this.items = items
       })
     }
-
+    
     public deleteCategory(categoryId : number){
       this.api.deleteCategory(categoryId)
       .then(data=>{
         this.getCategories()
       })
     };
-
+    
+    public deleteItem(itemId : number) : void{
+      this.api.deleteItem(itemId)
+      .then(data=>{
+        this.getItems(this.collection.id)
+      })
+    };
     
 }
