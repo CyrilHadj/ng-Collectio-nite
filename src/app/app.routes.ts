@@ -11,6 +11,10 @@ import { AddCategoryComponent } from '../component/category/add-category/add-cat
 import { UpdateCategoryComponent } from '../component/category/update-category/update-category.component';
 import { AddCategoryItemComponent } from '../component/category/add-category-item/add-category-item.component';
 import { ImageUploadComponent } from '../component/image/image-upload/image-upload.component';
+import { ImageSliderModelComponent } from '../component/Model/image-slider-model/image-slider-model.component';
+import { ContentModelComponent } from '../component/Model/content-model/content-model.component';
+import { CheckListModelComponent } from '../component/Model/check-list-model/check-list-model.component';
+import { ModelsComponent } from '../component/Model/models/models.component';
 
 export const routes: Routes = [
     {path : "",component:HomeComponent},
@@ -24,6 +28,6 @@ export const routes: Routes = [
     {path : "add-category-item/:itemId/:collectionId",component:AddCategoryItemComponent},
     {path : "update-category/:categoryId/:collectionId",component:UpdateCategoryComponent},
     {path : "image-upload",component:ImageUploadComponent},
-
+    {path : "models/:itemId",component:ModelsComponent},
     {path : "**",component:NotFoundComponent}
 ];

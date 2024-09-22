@@ -1,0 +1,33 @@
+body {
+    background-color: #2F3B46;
+    color: white;
+  }
+  
+  .btn-group .btn {
+    background-color: #112031;
+    color: white;
+    border-radius: 30px;
+    border: none;
+    margin-right: 5px;
+  }
+  
+  .btn-group .btn.active {
+    background-color: #0C1117;
+  }
+  
+  .checklist-item {
+    background-color: #D9D9D9;
+    border-radius: 30px;
+    padding: 10px 20px;
+    margin: 15px 0;
+    width: 100%;
+  }
+  
+  .checklist-item input[type="checkbox"] {
+    margin-right: 15px;
+  }
+  
+  .checklist-container {
+    max-width: 900px;
+    margin: auto;
+  }

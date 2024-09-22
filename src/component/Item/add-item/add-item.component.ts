@@ -1,4 +1,4 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, Inject, Input, output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { Collection } from '../../../utils/interface/Collection';
 import { ImageUploadComponent } from '../../image/image-upload/image-upload.component';
 import { Url } from '../../../utils/interface/Url';
 import { imageItemId } from '../../../utils/interface/imageItemId';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ImageSliderModelComponent } from '../../Model/image-slider-model/image-slider-model.component';
 
 @Component({
   selector: 'app-add-item',
@@ -19,11 +21,6 @@ export class AddItemComponent {
 
   imageUrl!: Url | void;
 
-  receiveUrl($event: Url){
-    console.log($event)
-    this.imageUrl = $event
-  };
-
   addItemGroup = new FormGroup({
     name : new FormControl<string>("",[
       Validators.required,
@@ -31,12 +28,35 @@ export class AddItemComponent {
     ])
   })
   
-  constructor(private api : ApiService, private router : Router){}
+  constructor(
+    private api : ApiService,
+      private router : Router,
+      public dialog : MatDialog,
+      public dialogRef: MatDialogRef<AddItemComponent>,
+      @Inject(MAT_DIALOG_DATA) public data : any
+    ){}
   collection!: Collection;
 
-  
- 
-  public onAddItem = output<number>();
+  ngOnInit(){
+    this.api.getCollection(this.data.collectionId)
+    .then(collection =>{
+      this.collection = collection
+    })
+   
+  }
+
+  openImageDialog() {
+    const dialogRef = this.dialog.open(ImageUploadComponent,{
+      width: "50vw",
+    })
+    dialogRef.afterClosed().subscribe(result =>{
+
+      if(result){
+        this.imageUrl = result.url
+      }
+    })
+  }
+
 
   onSubmit(){
     const item : Item={
@@ -54,17 +74,14 @@ export class AddItemComponent {
           url : this.imageUrl
         }
         this.api.postImageToItem(imageItemId)
+        this.dialogRef.close(
+          { status: 'confirmed' }
+        );
       }
-        this.onAddItem.emit(this.collection.id);
+    
       })
     
   }
 
-  @Input()set collectionId(collectionId : number){
-   this.api.getCollection(collectionId)
-   .then(collection=>{
-    this.collection = collection
-   })
-   
-  }
+
 }

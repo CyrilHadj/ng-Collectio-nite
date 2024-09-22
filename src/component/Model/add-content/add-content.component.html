@@ -1,0 +1,25 @@
+<div class="container">
+<h2>Ajouter du contenu</h2>
+<form [formGroup]="addContentForm" (ngSubmit)="addNewContent()">
+    
+    <label for="inputTitle">Titre :</label>
+    <input
+      formControlName="title"
+      type="text"
+      class="form-control"
+      id="inputName"
+  
+    />
+  
+    <label for="inputText">text : </label>
+    <textarea
+      formControlName="text"
+      class="form-control"
+      id="inputDescription"
+ 
+    ></textarea>
+  
+    
+    <button type="submit" class="button-style">Ajouter un contenu</button>
+</form>
+</div>
