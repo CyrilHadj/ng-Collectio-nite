@@ -1,4 +1,5 @@
 
+<button (click)="openAddItemFormDialog()">ouvrir image</button>
 
 <div class="container-fluid">
   <div class="row">
@@ -9,9 +10,9 @@
       @for(category of categories; track category.id){
 
         <div class="d-flex justify-content-between">
-        <p (click)="showItemByCategory(category.id)">{{category.name}}</p>
+        <p (click)="showItemByCategory(category.id)">{{category?.name}}</p>
       <div>
-        <i routerLink="/update-category/{{category.id}}/{{collection.id}}" class="fa-solid fa-pen"></i>
+        <i routerLink="/update-category/{{category?.id}}/{{collection?.id}}" class="fa-solid fa-pen"></i>
         <i class="fa-solid fa-trash" (click)="deleteCategory(category.id)"></i>
       </div>
       </div>
@@ -19,13 +20,13 @@
       }
       <div>
         <button 
-          routerLink="/add-category/{{collection.id}}"
+          routerLink="/add-category/{{collection?.id}}"
           >
           add category
         </button>
     </div>
     </div>
-    <app-add-item [collectionId]="collection.id" (onAddItem)="submit($event)"></app-add-item>
+    
   </div>
   <div class="col-lg-10">
 
@@ -35,18 +36,19 @@
       
       <div class="card col-lg-4" style="width: 18rem">
         <img
+        routerLink="/models/{{item?.id}}"
           class="card-img-top"
           [src]="imageUrls[item.id]"
           alt="Card image cap"
         />
 
         <div class="card-body">
-          <h5 class="card-title">{{ item.name }}</h5>
+          <h5 class="card-title">{{ item?.name }}</h5>
         </div>
     
-        <button routerLink="/add-category-item/{{item.id}}/{{collection.id}}">add category</button>
+        <button routerLink="/add-category-item/{{item?.id}}/{{collection?.id}}">add category</button>
         <button (click)="deleteItem(item.id)">delete</button>
-        <button routerLink="/update-item/{{ item.id }}/{{collection.id}}">Modifier</button>
+        <button routerLink="/update-item/{{ item?.id }}/{{collection?.id}}">Modifier</button>
       </div>
       }
     </div>

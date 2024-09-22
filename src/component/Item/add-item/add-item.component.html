@@ -1,4 +1,4 @@
-<app-image-upload (imageEvent)="receiveUrl($event)"></app-image-upload>
+<button (click)="openImageDialog()">ouvrir image</button>
 
 <form [formGroup]="addItemGroup" (ngSubmit)="onSubmit()">
   <label for="inputName">Name</label>

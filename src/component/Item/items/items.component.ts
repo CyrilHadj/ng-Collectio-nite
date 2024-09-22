@@ -13,6 +13,8 @@ import { UpdateCollectionComponent } from "../../Collection/update-collection/up
 import { Category } from '../../../utils/interface/Category';
 import { CategoryAndItemId } from '../../../utils/interface/CategoryAndItemId';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ImageUploadComponent } from '../../image/image-upload/image-upload.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-items',
@@ -38,6 +40,7 @@ export class ItemsComponent {
     private api : ApiService,
      private router : Router,
      private sanitizer : DomSanitizer,
+     public dialog : MatDialog
     ){}
 
   categories : Category[] = [];
@@ -53,7 +56,16 @@ export class ItemsComponent {
    
     }
     
-
+    openAddItemFormDialog() {
+      const dialogRef = this.dialog.open(AddItemComponent,{
+        width: "50vw",
+        data : {collectionId : this.collection.id}
+      })
+      dialogRef.afterClosed().subscribe(result =>{
+        this.loadItemsAndImages(this.collection.id);
+      })
+    }
+  
     public async getItemImage(itemId : number){
       try{
       const image = await this.api.getImageByItem(itemId)

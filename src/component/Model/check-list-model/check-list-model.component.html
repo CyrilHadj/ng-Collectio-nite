@@ -1,0 +1,41 @@
+<div class="container checklist-container">
+    <!-- Boutons de filtre -->
+    <div class="btn-group my-4" role="group" aria-label="Filter buttons">
+      <button type="button" class="btn" 
+              [class.active]="selectedFilter === 'all'" 
+              (click)="filterTasks('all')">Toute</button>
+      <button type="button" class="btn" 
+              [class.active]="selectedFilter === 'completed'" 
+              (click)="filterTasks('completed')">Terminé</button>
+      <button type="button" class="btn" 
+              [class.active]="selectedFilter === 'inProgress'" 
+              (click)="filterTasks('inProgress')">En cours</button>
+    </div>
+  
+    <!-- Liste de tâches -->
+    <div class="row">
+      <div class="col-lg-6 col-md-6" *ngFor="let task of filteredTasks">
+        <div class="checklist-item d-flex align-items-center">
+          <input 
+            (change)="updateTask(task)"
+            type="checkbox" 
+            [(ngModel)]="task.completed"
+            id="{{task.id}}"
+           >
+          <label for="{{task.id}}">{{ task.title }}</label>
+          <button class="btn" (click)="deleteTask(task.id)">Supprimer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="addTaskGroup" (ngSubmit)="newTaskSubmit()">
+    <label for="inputName">title : </label>
+    <input
+      formControlName="title"
+      type="text"
+      id="inputName"
+      placeholder="name"
+    >
+    <button type="submit" class="button-style">Ajouter une nouvelle tache</button>
+  </form>

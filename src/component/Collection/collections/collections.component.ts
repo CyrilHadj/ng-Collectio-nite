@@ -28,7 +28,7 @@ export class CollectionsComponent {
       const imageUrl = await this.getCollectionImage(collection.id)
       this.imageUrls[collection.id] = imageUrl
     })
-})
+  })
    
   }
 

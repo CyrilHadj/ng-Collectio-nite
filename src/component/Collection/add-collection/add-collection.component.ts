@@ -7,6 +7,8 @@ import { ImageUploadComponent } from '../../image/image-upload/image-upload.comp
 
 import { imageCollectionId } from '../../../utils/interface/imageCollectionId';
 import { Url } from '../../../utils/interface/Url';
+import { MatDialog } from '@angular/material/dialog';
+import { ImageSliderModelComponent } from '../../Model/image-slider-model/image-slider-model.component';
 
 @Component({
   selector: 'app-add-collection',
@@ -18,22 +20,29 @@ import { Url } from '../../../utils/interface/Url';
 export class AddCollectionComponent {
   imageUrl!: Url | void;
 
-  receiveUrl($event: Url){
-    console.log($event)
-    this.imageUrl = $event
-  }
- 
   addCollectionGroup = new FormGroup({
     name : new FormControl<string>(""),
     description : new FormControl<string>(""),
   })
 
-  constructor(private api : ApiService, private router : Router){}
+  constructor(private api : ApiService, private router : Router, public dialog : MatDialog){}
   collection : Collection={
     id: 0,
     name: "",
     description: "",
     ImageId: 0,
+  }
+
+  openImageDialog() {
+    const dialogRef = this.dialog.open(ImageUploadComponent,{
+      width: "50vw",
+    })
+    dialogRef.afterClosed().subscribe(result =>{
+
+      if(result){
+        this.imageUrl = result.url
+      }
+    })
   }
 
   ngOnInit(){
@@ -47,7 +56,6 @@ export class AddCollectionComponent {
 
       this.collection.name = this.addCollectionGroup.value.name;
       this.collection.description = this.addCollectionGroup.value.description;
-      
       
       this.api.postCollection(this.collection)
       .then(collection=>{
