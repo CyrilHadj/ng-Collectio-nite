@@ -1,0 +1,23 @@
+.error-message {
+    color: #FFD700;
+    margin-top: 10px;
+}
+.container{
+    height: 100vh;
+} 
+
+.card{
+    background-color: #02182b;
+    color: whitesmoke;
+    border-radius: 40px;
+    border: 7px solid whitesmoke;
+}
+
+.btn-success{
+    background-color: #FFD700;
+    color: #02182b;
+}
+
+.btn-success:hover{
+    background-color: #d9b903;
+}

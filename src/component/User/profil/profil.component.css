@@ -1,0 +1,43 @@
+
+  .vr {
+    width: 2px;
+    background-color: #FFD700; 
+  }
+  
+  img {
+    max-width: 150px;
+    max-height: 150px;
+    border: 3px solid #FFD700;
+    object-fit: cover;
+  }
+  
+  h4 {
+    margin-top: 20px;
+  }
+  
+  button {
+    border-radius: 20px;
+    padding: 10px 20px;
+  }
+
+  .profil-card{
+    background-color: #02182B;
+    border-radius: 40px;
+    border: 7px solid whitesmoke;
+  }
+
+
+  .collection-list {
+    display: flex;
+    justify-content: space-around;
+    height: 18vh;
+    margin-top: 10px;
+}
+.collection-item {
+    text-align: center;
+}
+.collection-img {
+    width: 80px;
+    height: 100px;
+    border-radius: 10px;
+}

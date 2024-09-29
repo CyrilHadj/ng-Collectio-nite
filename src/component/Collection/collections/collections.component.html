@@ -1,32 +1,41 @@
+<div class="collections-container">
 <div class="btn-container">
   <div>
-    <button class="fa-solid fa-plus" routerLink="/add-collection"></button>
+    <button class="fa-solid fa-plus" (click)="openAddCollectionDialog()"></button>
   </div>
 </div>
 
 <div class="collections">
   @for(collection of collections; track collection.id){
 
-  <div class="card" style="width: 18rem">
-    <img
-      class="card-img-top"
-      [src]="imageUrls[collection.id]"
-      alt="Card image cap"
-      routerLink="/items/{{ collection.id }}"
-    />
+  <div class="card collection-card" style="width: 18rem">
+    <div class="card-img-wrapper">
+      <img
+        class="card-img-top"
+        [src]="imageUrls[collection.id]"
+        alt="Card image cap"
+        routerLink="/items/{{ collection.id }}"
+      />
+      <div class="overlay-content">
 
-    <div class="card-body">
-      <h5 class="card-title">{{ collection.name }}</h5>
+        <h5 class="card-title">{{ collection.name }}</h5>
+        <p>{{collection.description}}</p>
+
+        <div class="action-buttons">
+
+          <button (click)="deleteCollection(collection.id)" class="btn btn-outline-danger btn-sm">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+
+          <button mat-button class="btn btn-outline-primary btn-sm me-2" (click)="openUpdateCollectionDialog(collection.id)">
+            <i class="fa-solid fa-pen"></i>
+          </button>
+          
+        </div>
+      </div>
     </div>
-    <button (click)="deleteCollection(collection.id)">delete</button>
-    <button
-      mat-button
-      class="button-style"
-      routerLink="/update-collection/{{ collection.id }}"
-    >
-      Modifier
-    </button>
   </div>
 
   }
+</div>
 </div>

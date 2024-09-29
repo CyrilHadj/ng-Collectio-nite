@@ -1,24 +1,38 @@
-<h2>Single File Upload</h2>
 
-<input type="file" class="file-input" (change)="onChange($event)" #fileUpload />
+<div class="upload-container">
+  <h2>Ajouter une image</h2>
+  <input type="file" id="fileInput" class="file-input" (change)="onChange($event)" />
+  
+  <label for="fileInput" class="custom-file-label">
+    Choisir une image
+  </label>
 
-<div *ngIf="file">
-  <section class="file-info">
-    File details:
+
+  <div *ngIf="file" class="file-info ">
+    <h3>Détail de l'image:</h3>
     <ul>
-      <li>Name: {{file.name}}</li>
-      <li>Type: {{file.type}}</li>
-      <li>Size: {{file.size}} bytes</li>
+      <li><strong>Nom :</strong> {{file.name}}</li>
+      <li><strong>Type :</strong> {{file.type}}</li>
+      <li><strong>Taille :</strong> {{file.size}} bytes</li>
     </ul>
-  </section>
 
-  <button (click)="onUpload()">Upload the file</button>
+    <div class="d-flex justify-content-center align-item-center">
+    <button class="upload-btn" (click)="onUpload()" [disabled]="status === 'uploading'">
+      {{ status === 'uploading' ? 'Uploading...' : 'Upload Image' }}
+    </button>
+  </div>
+  </div>
 
-  <section [ngSwitch]="status">
-    <p *ngSwitchCase="'uploading'">⏳ Uploading...</p>
-    <p *ngSwitchCase="'success'">✅ Done!</p>
-    <p *ngSwitchCase="'fail'">❌ Error!</p>
-    <p *ngSwitchDefault>😶 Waiting to upload...</p>
-  </section>
+
+  <div *ngIf="errorMessage" class="error-message">
+    ❌ {{errorMessage}}
+  </div>
+
+
+  <div class="status" [ngSwitch]="status">
+    <p *ngSwitchCase="'uploading'" class="uploading">⏳ Transfert ...</p>
+    <p *ngSwitchCase="'success'" class="success">✅ Transfert Réussi</p>
+    <p *ngSwitchCase="'fail'" class="fail">❌ le transfert a échoué  Merci de réessayer.</p>
+    <p *ngSwitchDefault>😶 En attente de transfert...</p>
+  </div>
 </div>
-

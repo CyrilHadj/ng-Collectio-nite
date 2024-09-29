@@ -19,12 +19,9 @@ export class ModelsComponent {
     private api : ApiService,
      private router : Router,
     ){}
-  itemID : number = 0
-  ngOnInit() : void{
-   
-
+    itemID : number = 0
+    ngOnInit() : void{
   }
-
 
   @Input() set itemId(itemId : number){
     this.itemID = itemId

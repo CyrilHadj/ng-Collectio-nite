@@ -11,23 +11,90 @@ import { AddCategoryComponent } from '../component/category/add-category/add-cat
 import { UpdateCategoryComponent } from '../component/category/update-category/update-category.component';
 import { AddCategoryItemComponent } from '../component/category/add-category-item/add-category-item.component';
 import { ImageUploadComponent } from '../component/image/image-upload/image-upload.component';
-import { ImageSliderModelComponent } from '../component/Model/image-slider-model/image-slider-model.component';
-import { ContentModelComponent } from '../component/Model/content-model/content-model.component';
-import { CheckListModelComponent } from '../component/Model/check-list-model/check-list-model.component';
 import { ModelsComponent } from '../component/Model/models/models.component';
+import { SignupComponent } from '../component/User/signup/signup.component';
+import { SigninComponent } from '../component/User/signin/signin.component';
+import { ProfilComponent } from '../component/User/profil/profil.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 export const routes: Routes = [
     {path : "",component:HomeComponent},
-    {path : "collections",component:CollectionsComponent},
-    {path : "add-collection",component:AddCollectionComponent},
-    {path : "update-collection/:collectionId",component:UpdateCollectionComponent},
-    {path : "items/:collectionId",component:ItemsComponent},
-    {path : "add-item/:collectionId",component:AddItemComponent},
-    {path : "update-item/:itemId/:collectionId",component:UpdateItemComponent},
-    {path : "add-category/:collectionId",component:AddCategoryComponent},
-    {path : "add-category-item/:itemId/:collectionId",component:AddCategoryItemComponent},
-    {path : "update-category/:categoryId/:collectionId",component:UpdateCategoryComponent},
-    {path : "image-upload",component:ImageUploadComponent},
-    {path : "models/:itemId",component:ModelsComponent},
-    {path : "**",component:NotFoundComponent}
+    {
+        path : "profil",
+        component:ProfilComponent,
+         canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "signup",
+        component:SignupComponent
+    },
+    {
+        path : "signin",
+        component:SigninComponent
+    },
+    {
+        path : "collections",
+        component:CollectionsComponent,
+        canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "add-collection",
+        component:AddCollectionComponent,
+        canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "update-collection/:collectionId",
+        component:UpdateCollectionComponent,
+        canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "items/:collectionId",
+        component:ItemsComponent,
+        canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "add-item/:collectionId",
+        component:AddItemComponent,
+        canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "update-item/:itemId/:collectionId",
+        component:UpdateItemComponent,
+        canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "add-category-item/:itemId/:collectionId",
+        component:AddCategoryItemComponent,
+        canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "update-category/:categoryId/:collectionId",
+        component:UpdateCategoryComponent,
+        canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "image-upload",
+        component:ImageUploadComponent,
+        canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "models/:itemId",
+        component:ModelsComponent,
+        canActivate: [AuthGuard],
+        data: { importance: 1 }
+    },
+    {
+        path : "**",
+        component:NotFoundComponent
+    }
 ];

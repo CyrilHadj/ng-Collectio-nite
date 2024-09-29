@@ -1,0 +1,15 @@
+.content-card{
+    background-color: #576979;
+    color: whitesmoke;
+    min-height: 55vh;
+}
+
+.btn{
+    background-color: #FFD700;
+    color: #02182B;
+    border: none;
+}
+
+.btn:hover{
+    background-color: #c2a505;
+}

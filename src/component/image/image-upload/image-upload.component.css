@@ -1,0 +1,64 @@
+.upload-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #02182B;
+  }
+  
+  .custom-file-label {
+    display: inline-block;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #3f51b5;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .custom-file-label:hover {
+    background-color: #303f9f;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  .file-info {
+    margin-top: 20px;
+    text-align: left;
+  }
+  
+  .upload-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .upload-btn:disabled {
+    background-color: #9E9E9E;
+    cursor: not-allowed;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  .status {
+    margin-top: 20px;
+  }
+  
+  .uploading {
+    color: #FFC107;
+  }
+  
+  .success {
+    color: #4CAF50;
+  }
+  
+  .fail {
+    color: #F44336;
+  }

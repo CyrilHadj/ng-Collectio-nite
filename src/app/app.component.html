@@ -1,4 +1,5 @@
-<nav class="d-flex justify-content-between align-items-center">
+<nav class="d-flex align-items-center justify-content-between">
+  <div class="d-flex align-items-center">
   <div class="dropdown">
     <button
       type="button"
@@ -14,27 +15,61 @@
       </div>
     </ul>
   </div>
-  <a routerLink="/"
-    ><img src="http://localhost:8090/Logo_1725984602691.png" alt="" height="80" width="80"
-  /></a>
-
-  <div class="d-flex">
-    <form class="form-inline my-2 my-lg-0 d-flex align-items-center">
-      <input
-        class="form-control mr-sm-2"
-        type="search"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-        Search
-      </button>
-    </form>
+    <a routerLink="/"
+      ><img src="assets/Logo.png" alt="" height="80" width="80"
+    /></a>
   </div>
 
-  <a routerLink="/"
-    ><img src="../images/Logo.jpg" alt="" height="80" width="80"
-  /></a>
+    <a routerLink="/profil" class="profil-btn"><i class="fa-solid fa-user"></i></a>
+
+
 </nav>
 
-<router-outlet></router-outlet>
+
+<router-outlet class="body-app"></router-outlet>
+
+
+<footer class="text-light pt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-8 mb-3 text-center text-md-start">
+        <h3 class="text-warning">Collectio-nite</h3>
+        <p>Gérer vos collections en toute simplicité</p>
+      </div>
+      <div class="col-12 col-md-4 mb-3 text-center text-md-end">
+        <h4>Contactez nous</h4>
+        <ul class="list-unstyled d-flex justify-content-center justify-content-md-end flex-wrap">
+          <li class="me-3 mb-2">
+            <a href="#" class="text-light fs-4">
+              <i class="fab fa-facebook"></i>
+            </a>
+          </li>
+          <li class="me-3 mb-2">
+            <a href="#" class="text-light fs-4">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li class="me-3 mb-2">
+            <a href="#" class="text-light fs-4">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-light fs-4">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row pt-3 border-top border-secondary">
+      <div class="col-12 col-md-6 text-center text-md-start">
+        <p>&copy; 2024 Collectio-nite. Tout droits réservé.</p>
+      </div>
+      <div class="col-12 col-md-6 text-center text-md-end">
+        <p>Politique de confidentialité | Conditions générales</p>
+      </div>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,58 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+
+  <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
+    <h1 class="text-center mb-4">Connexion</h1>
+    <form [formGroup]="SignInForm" (ngSubmit)="onSubmit()">
+
+      <div class="mb-3">
+        <label for="inputEmail" class="form-label">Email :</label>
+        <input
+          formControlName="email"
+          type="email"
+          class="form-control"
+          id="inputEmail"
+          placeholder="Email..."
+        />
+
+        <div *ngIf="SignInForm.get('email')?.invalid && SignInForm.get('email')?.touched">
+          <small class="text-danger" *ngIf="SignInForm.get('email')?.hasError('required')">
+            L'email est requis.
+          </small>
+          <small class="text-danger" *ngIf="SignInForm.get('email')?.hasError('email')">
+            Veuillez entrer un email valide.
+          </small>
+        </div>
+        
+      </div>
+
+
+      <div class="mb-3">
+        <label for="inputPassword" class="form-label">Mot de passe :</label>
+        <input
+          formControlName="password"
+          type="password"
+          class="form-control"
+          id="inputPassword"
+          placeholder="Mot de passe..."
+        />
+ 
+        <div *ngIf="SignInForm.get('password')?.invalid && SignInForm.get('password')?.touched">
+          <small class="text-danger" *ngIf="SignInForm.get('password')?.hasError('required')">Le mot de passe est requis.</small>
+          <small class="text-danger" *ngIf="SignInForm.get('password')?.hasError('minlength')">
+            Le mot de passe doit comporter au moins 8 caractères.
+          </small>
+        </div>
+      </div>
+
+      <p>Vous n'avez pas de compte ? :<a class="register" routerLink="/signup"> Créer un compte</a></p>
+      <button type="submit" class="btn btn-success w-100" [disabled]="SignInForm.invalid">Connexion</button>
+    </form>
+
+
+    <div *ngIf="errorMessage" class="error-message text-danger mt-3">
+      {{ errorMessage }}
+    </div>
+  </div>
+</div>
+
+

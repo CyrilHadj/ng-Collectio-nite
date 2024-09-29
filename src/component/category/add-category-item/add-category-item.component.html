@@ -1,9 +1,23 @@
-<form [formGroup]="categoryGroup" (ngSubmit)="onSubmit()">
-
-    @for(category of categories; track category.id){
-        <label for="category">{{category.name}}</label>
-        <input type="radio" id="category" name="category" formControlName="categoryId" value="{{category.id}}">
-    }
-
-<button type="submit" class="button-style">Add category to item</button>
-</form>
+<div class="card p-4 shadow-lg">
+    <h1 class="text-center mb-4">Ajouter dans la catégorie</h1>
+    <form [formGroup]="categoryGroup" (ngSubmit)="onSubmit()">
+      
+      <div class="mb-4">
+        <label for="categorySelect" class="form-label">Sélectionnez une catégorie</label>
+        <select
+          class="form-select form-select-lg"
+          id="categorySelect"
+          formControlName="categoryId"
+          aria-label="Sélectionnez une catégorie">
+          <option selected disabled>Choisissez une catégorie</option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{category.name}}
+          </option>
+        </select>
+      </div>
+      
+      <button type="submit" class="btn btn-success btn-lg w-100">
+        Ajouter dans la catégorie
+      </button>
+    </form>
+  </div>

@@ -1,8 +1,6 @@
-body {
-    background-color: #2F3B46;
-    color: white;
-  }
-  
+.container{
+  height: 80vh;
+}
   .btn-group .btn {
     background-color: #112031;
     color: white;
@@ -16,7 +14,7 @@ body {
   }
   
   .checklist-item {
-    background-color: #D9D9D9;
+    background-color: #576979;
     border-radius: 30px;
     padding: 10px 20px;
     margin: 15px 0;
@@ -31,3 +29,36 @@ body {
     max-width: 900px;
     margin: auto;
   }
+
+  .task-list{
+    padding: 5%;
+  }
+
+  .add-task-form{
+    padding: 5%;
+  }
+
+  .trash-icon{
+    cursor: pointer;
+  
+  }
+
+  .trash-icon :hover{
+    color: #FFD700;
+  }
+
+  .card{
+    background-color: #02182b;
+    color: whitesmoke;
+    border-radius: 40px;
+    border: 7px solid whitesmoke;
+}
+
+.btn-success{
+    background-color: #FFD700;
+    color: #02182b;
+}
+
+.btn-success:hover{
+    background-color: #d9b903;
+}

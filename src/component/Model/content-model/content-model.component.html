@@ -4,36 +4,35 @@
     <div class="row">
  
       <div class="col-lg-4 text-center">
-        <img src="https://placehold.co/300x450" alt="Zelda Image" class="img-fluid rounded">
+        <img [src]="imageUrl"  class="img-fluid rounded">
       </div>
   
       <div class="col-lg-8">
         <div>
-          <!-- Affichage normal -->
           <div *ngIf="caracteristique">
-            <h2>{{ caracteristique?.title }}</h2>
+            <h2>{{ caracteristique.title }}</h2>
             <hr>
-            <h4>{{ caracteristique?.subtitle }}</h4>
+            <h4>{{ caracteristique.subtitle }}</h4>
           </div>
-          <div class="card p-3 bg-light">
+          <div class="card p-3 content-card">
             <ul class="list-unstyled" *ngIf="contents && contents.length > 0">
               <li *ngFor="let content of contents">
                 <strong>{{ content?.title }}</strong>{{ content?.text }}
+                <br>
+                <br>
               </li>
             </ul>
           </div>
   
-        
-        
         </div>
-  
-
-
-        <button mat-raised-button (click)="openDialogAddForm()">Ajouter contenu</button>
-        <button mat-raised-button (click)="openDialogUpdateForm()">Modifier contenu</button>
-
-
-      </div>
+        <div class="d-flex justify-content-center align-items-center mt-4">
+          <button (click)="openDialogAddForm()" class="btn btn-primary btn-lg me-3" >
+            <i class="bi bi-plus-circle"></i> Ajouter contenu
+          </button>
+          <button (click)="openDialogUpdateForm()" class="btn btn-primary btn-lg">
+            <i class="bi bi-pencil"></i> Modifier contenu
+          </button>
+        </div>
     </div>
   </div>
   

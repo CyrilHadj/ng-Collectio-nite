@@ -1,7 +1,10 @@
-<app-image-upload (imageEvent)="receiveUrl($event)"></app-image-upload>
+
+<div class="card p-4 shadow-lg">
+  <h1 class="text-center mb-4">Modifier collection</h1>
 
 <form [formGroup]="updateCollectionForm" (ngSubmit)="onSubmit()">
-  <label for="inputName">Name</label>
+  <div class="mb-3">
+  <label for="inputName">Name : </label>
   <input
     formControlName="name"
     type="name"
@@ -10,13 +13,15 @@
     placeholder="name"
   />
 
-  <label for="inputDescription">Description</label>
+  <label for="inputDescription">Description :</label>
   <textarea
     formControlName="description"
     class="form-control"
     id="inputDescription"
     placeholder="Description"
   ></textarea>
-
-  <button type="submit" class="button-style">update Collection</button>
+</div>
+  <button type="button" class="btn btn-secondary mb-3" (click)="openImageDialog()">Ajouter une image</button>
+  <button type="submit" class="button-style btn btn-success w-100">Modifier Collection</button>
 </form>
+</div>

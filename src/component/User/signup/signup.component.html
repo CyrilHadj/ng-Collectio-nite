@@ -1,0 +1,56 @@
+<div class="container d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
+  <h1 class="text-center mb-4">Créer un compte</h1>
+<form [formGroup]="SignUpForm" (ngSubmit)="onSubmit()">
+<div class="mb-4">
+    <label for="inputName">Name</label>
+    <input
+      formControlName="name"
+      type="text"
+      class="form-control"
+      id="inputName"
+      placeholder="name..."
+    />
+
+  <div *ngIf="SignUpForm.get('name')?.invalid && SignUpForm.get('name')?.touched">
+    <small *ngIf="SignUpForm.get('name')?.hasError('required')">Le nom est requis.</small>
+  </div>
+
+    <label for="inputEmail">Email : </label>
+    <input
+      formControlName="email"
+      type="email"
+      class="form-control"
+      id="inputEmail"
+      placeholder="Email..."
+    />
+
+  <div *ngIf="SignUpForm.get('email')?.invalid && SignUpForm.get('email')?.touched">
+    <small *ngIf="SignUpForm.get('email')?.hasError('required')">L'email est requis.</small>
+    <small *ngIf="SignUpForm.get('email')?.hasError('email')">Veuillez entrer un email valide.</small>
+  </div>
+
+    <label for="inputPassword">Password : </label>
+    <input
+      formControlName="password"
+      type="password"
+      class="form-control"
+      id="inputPassword"
+    />
+
+  <div *ngIf="SignUpForm.get('password')?.invalid && SignUpForm.get('password')?.touched">
+    <small *ngIf="SignUpForm.get('password')?.hasError('required')">Le mot de passe est requis.</small>
+    <small *ngIf="SignUpForm.get('password')?.hasError('minlength')">
+       Le mot de passe doit comporter au moins 8 caractères.
+    </small>
+  </div>
+</div>
+  <button type="button" class="btn btn-secondary mb-3" (click)="openImageDialog()">Ajouter une image de profil</button>
+  <button type="submit" class="btn btn-success w-100" [disabled]="SignUpForm.invalid">Créer un compte</button>
+</form>
+
+<div *ngIf="errorMessage" class="error-message">
+  {{ errorMessage }}
+</div>
+</div>
+</div>

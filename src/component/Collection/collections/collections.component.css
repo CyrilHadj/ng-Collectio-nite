@@ -1,44 +1,164 @@
-.collections{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    justify-items: center;
-    gap: 40px;
+.collections-container{
+  min-height: 100vh;
+}
+.card {
+  background-color: #303A43 !important;
+  border: none !important;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+.collections {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-items: center;
+  gap: 40px;
 }
 
 @media only screen and (max-width: 1380px) {
-  .collections{
+  .collections {
     grid-template-columns: 1fr 1fr 1fr;
   }
-  }
+}
 
 @media only screen and (max-width: 980px) {
-    .collections{
-      grid-template-columns: 1fr 1fr;
+  .collections {
+    grid-template-columns: 1fr 1fr;
+  }
 }
-}
-  
+
 @media only screen and (max-width: 640px) {
-    .collections{
-      grid-template-columns: 1fr;
-}
-}
-
-.btn-container{
-    height: 30vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  
+  .collections {
+    grid-template-columns: 1fr;
+  }
 }
 
-.btn-container button{
-    border: none;
-    font-size: 80px;
-    background-color: #02182B;
-    color: whitesmoke;
-    padding: 30px;
-    border-radius: 20px;
+
+.btn-container {
+  height: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.btn-container button:hover{
-    color: #FFD700;
+
+.btn-container button {
+  border: none;
+  font-size: 80px;
+  background-color: #02182b;
+  color: whitesmoke;
+  padding: 30px;
+  border-radius: 20px;
+}
+
+.btn-container button:hover {
+  color: #ffd700;
+}
+
+
+.collection-card {
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  background-color: #303A43; 
+}
+
+.collection-card:hover {
+  transform: scale(1.05);
+}
+
+
+.card-img-wrapper {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+
+.overlay-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6); 
+  color: #fff;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  padding: 10px;
+}
+
+.collection-card:hover .overlay-content {
+  opacity: 1;
+}
+
+
+.card-title {
+  font-size: 1.2rem;
+  color: whitesmoke;
+  margin-bottom: 10px;
+}
+
+
+.action-buttons {
+  display: none;
+  justify-content: center;
+  gap: 10px;
+}
+
+.collection-card:hover .action-buttons {
+  display: flex;
+}
+
+
+.action-buttons button {
+  color: #fff;
+  background-color: transparent;
+  border: 1px solid #fff;
+  font-size: 1.2rem;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+  background-color: rgba(255, 255, 255, 0.2); 
+}
+
+
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-outline-primary {
+  color: #0d6efd;
+  border-color: #0d6efd;
+}
+
+.btn-outline-danger {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+
+.btn-outline-secondary:hover {
+  background-color: rgba(108, 117, 125, 0.2);
+}
+
+.btn-outline-primary:hover {
+  background-color: rgba(13, 110, 253, 0.2);
+}
+
+.btn-outline-danger:hover {
+  background-color: rgba(220, 53, 69, 0.2);
 }

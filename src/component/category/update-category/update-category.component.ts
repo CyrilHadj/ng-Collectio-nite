@@ -1,10 +1,12 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { Category } from '../../../utils/interface/Category';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 import { ApiService } from '../../../services/api.service';
 import { Collection } from '../../../utils/interface/Collection';
 import { Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AddCategoryItemComponent } from '../add-category-item/add-category-item.component';
 
 @Component({
   selector: 'app-update-category',
@@ -22,26 +24,28 @@ export class UpdateCategoryComponent {
     name : new FormControl<string>(""),
   })
 
-  constructor(private api : ApiService, private router : Router){}
+  constructor(
+    private api : ApiService,
+    private router : Router,
+    public dialogRef: MatDialogRef<AddCategoryItemComponent>,
+    @Inject(MAT_DIALOG_DATA) public data : any
+    ){}
+  
+  ngOnInit() : void{
+    this.api.getCategoryById(this.data.categoryId)
+    .then((category)=>{
+      this.category = category
+    })
+  }
 
   onSubmit(){
     if(this.category){
       this.category.name = String(this.updateCategoryForm.value.name);
 
       this.api.updateCategory(this.category).then(data=>{
-        this.router.navigateByUrl("/items/"+this.collectionID)
+        this.dialogRef.close()
       })
     }
   }
 
-  @Input() set categoryId(categoryId : number){
-    this.api.getCategoryById(categoryId).then(category=>{
-      this.category = category
-    })
-    .catch(error => console.log(error))
-  }
-
-  @Input() set collectionId(collectionId : number){
-      this.collectionID = collectionId
-  }
 }

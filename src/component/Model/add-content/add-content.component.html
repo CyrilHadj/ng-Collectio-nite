@@ -1,7 +1,7 @@
-<div class="container">
-<h2>Ajouter du contenu</h2>
+<div class="card p-4 shadow-lg">
+<h1 class="text-center mb-4">Ajouter du contenu</h1>
 <form [formGroup]="addContentForm" (ngSubmit)="addNewContent()">
-    
+  <div class="mb-3">
     <label for="inputTitle">Titre :</label>
     <input
       formControlName="title"
@@ -16,10 +16,8 @@
       formControlName="text"
       class="form-control"
       id="inputDescription"
- 
     ></textarea>
-  
-    
-    <button type="submit" class="button-style">Ajouter un contenu</button>
+  </div>
+    <button type="submit" class="button-style btn btn-success w-100">Ajouter un contenu</button>
 </form>
 </div>

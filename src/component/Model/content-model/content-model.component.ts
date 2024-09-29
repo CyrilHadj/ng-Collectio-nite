@@ -10,6 +10,7 @@ import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { AddContentComponent } from '../add-content/add-content.component';
 import { UpdateComponentComponent } from '../update-component/update-component.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-content-model',
@@ -23,9 +24,14 @@ import { UpdateComponentComponent } from '../update-component/update-component.c
 export class ContentModelComponent {
 
   model!: Model; 
-
- constructor(private api : ApiService, public dialog : MatDialog){}
-
+  imageUrl : any
+ constructor(
+  private api : ApiService,
+  public dialog : MatDialog,
+  private sanitizer : DomSanitizer,
+  
+  ){}
+  maxContents: number = 5;
   caracteristique : Caracteristique = {
     title: '',
     subtitle: '',
@@ -38,7 +44,13 @@ export class ContentModelComponent {
 
   contents : Content [] = []
 
-
+  @Input() set itemId(itemId : number){
+   this.getItemImage(itemId)
+   .then((url)=>{
+    this.imageUrl = url
+   })
+  
+  }
 
   @Input() set modelId(modelId : number){
     this.api.getModelById(modelId)
@@ -47,30 +59,33 @@ export class ContentModelComponent {
       this.getContent(this.model.id);
       this.getCaracteristique(this.model.id);
     })
-   
-
-  }
+   }
 
 //method
 //form
 
 openDialogAddForm() : void {
-  this.dialog.open(AddContentComponent,{
+  const dialogRef =  this.dialog.open(AddContentComponent,{
     width: "50vw",
     data : {modelId : this.model.id}
-  });
- 
-  this.getContent(this.model.id);
+  })
+  dialogRef.afterClosed().subscribe(result =>{
 
+    this.getContent(this.model.id);
+  })
+ 
  
 };
 
 openDialogUpdateForm() : void {
-  this.dialog.open(UpdateComponentComponent,{
+  const dialogRef = this.dialog.open(UpdateComponentComponent,{
     width: "50vw",
     data : {modelId : this.model.id}
-  });
-  this.getContent(this.model.id);
+  })
+  dialogRef.afterClosed().subscribe(result =>{
+
+    this.getContent(this.model.id);
+  })
  
 
  
@@ -119,6 +134,15 @@ public getContent(modelId : number){
   })
 }
 
-
+public async getItemImage(itemId : number){
+  try{
+    const image = await this.api.getImageByItem(itemId)
+    const SafeUrl = this.sanitizer.bypassSecurityTrustUrl(image[0].url);
+    return SafeUrl;
+  }catch(error){
+    console.log("an error has occured" + error)
+    return '';
+  }
+  }
 
 }
