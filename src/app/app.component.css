@@ -2,7 +2,7 @@
     background-color: #02182B;
     color: whitesmoke;
 }
-/* Navbar */
+
 nav li a{
 
     text-decoration: none;
@@ -20,7 +20,6 @@ i{
     padding: 30px;
 }
 
-/* Bouton nav-bar */
 button{
     border: none;
 }
@@ -30,22 +29,59 @@ color: #FFD700;
 }
 
 .dropdown-menu{
-    width: 30vw;
+    width: 15vw;
     height: 60vh;
     border-bottom: 3px solid #FFD700;
 }
-
+.show{
+  display: flex;
+  justify-content: center;
+}
 .dropdown-menu li{
    margin-top: 25px;
 }
 
 .dropdown-menu li a{
     font-size: 25px;
-    padding-left: 25px;
     width: 100%;
 }
 .dropdown-menu li a:hover{
     color: #FFD700;
 }
 
+.dropdown{
+    margin-right: 7vw;
+}
 
+footer{
+  border-top: 2px solid #FFD700;
+}
+
+footer ul {
+    padding-left: 0;
+  }
+  
+  footer a:hover {
+    color: #FFD700; 
+  }
+  
+  footer .fab {
+    transition: color 0.3s ease;
+  }
+  
+  footer .fab:hover {
+    color: #FFD700;
+  }
+
+  .body-app{
+    min-height: 100vh;
+  }
+
+  .profil-btn{
+    cursor: pointer;
+
+  }
+  .profil-btn :hover{
+    cursor: pointer;
+    color: #FFD700;
+  }

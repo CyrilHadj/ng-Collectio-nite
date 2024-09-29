@@ -1,8 +1,11 @@
-import { Component, Input } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Category } from '../../../utils/interface/Category';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { CategoryToUser } from '../../../utils/interface/CategoryToUser';
 @Component({
   selector: 'app-add-category',
   standalone: true,
@@ -11,9 +14,13 @@ import { Router, RouterLink } from '@angular/router';
   styleUrl: './add-category.component.css'
 })
 export class AddCategoryComponent {
-  constructor(private api : ApiService, private router : Router){}
-
-  collectionID!: number;
+  constructor(
+    private api : ApiService,
+    private router : Router,
+    private auth : AuthService,
+    public dialogRef: MatDialogRef<AddCategoryComponent>,
+    @Inject(MAT_DIALOG_DATA) public data : any
+  ){}
 
   addCategoryGroup = new FormGroup({
     name : new FormControl<string>("",[
@@ -23,20 +30,24 @@ export class AddCategoryComponent {
   })
 
   onSubmit(){
-    const category : Category = {
-      id: 0,
-      name: ''
+ 
+    const token = this.auth.getPayload()
+    if(!token){
+      return
     }
 
-    category.name = this.addCategoryGroup.value.name ?? "";
+    const CategoryUser : CategoryToUser = {
+      userId: token.id,
+      name: this.addCategoryGroup.value.name ?? ""
+    }
 
-    this.api.postCategory(category)
-    .then(data=>{
-      this.router.navigateByUrl("/items/"+this.collectionID)
+    this.api.postCategoryToUser(CategoryUser)
+    .then(()=>{
+      this.dialogRef.close(
+        { status: 'confirmed' }
+      );
     })
+
   }
 
-  @Input() set collectionId(collectionId : number){
-    this.collectionID = collectionId
-  }
 }

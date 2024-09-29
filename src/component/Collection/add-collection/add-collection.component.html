@@ -1,24 +1,54 @@
-<button (click)="openImageDialog()">ouvrir image</button>
 
-<form [formGroup]="addCollectionGroup" (ngSubmit)="onSubmit()">
-  <label for="inputName">Name</label>
-  <input
-    formControlName="name"
-    type="name"
-    class="form-control"
-    id="inputName"
-    placeholder="name"
-  />
+  <div class="card p-4 shadow-lg" >
+    <h3 class="text-center mb-4">Ajouter une Collection</h3>
 
-  <label for="inputDescription">Description</label>
-  <textarea
-    formControlName="description"
-    class="form-control"
-    id="inputDescription"
-    placeholder="Description"
-  ></textarea>
+    <form [formGroup]="addCollectionGroup" (ngSubmit)="onSubmit()">
 
-  
-  <button type="submit" class="button-style">Add Collection</button>
-</form>
+      <div class="mb-3">
+        <label for="inputName" class="form-label">Nom de la collection</label>
+        <input
+          formControlName="name"
+          type="text"
+          class="form-control"
+          id="inputName"
+          placeholder="Entrez le nom"
+          [ngClass]="{ 'is-invalid': addCollectionGroup.get('name')?.invalid && addCollectionGroup.get('name')?.touched }"
+        />
+        <div *ngIf="addCollectionGroup.get('name')?.invalid && addCollectionGroup.get('name')?.touched" class="invalid-feedback">
+          <div *ngIf="addCollectionGroup.get('name')?.errors?.['required']">Le nom est obligatoire.</div>
+          <div *ngIf="addCollectionGroup.get('name')?.errors?.['minlength']">
+            Le nom doit contenir au moins 3 caractères.
+          </div>
+        </div>
+      </div>
 
+      <div class="mb-3">
+        <label for="inputDescription" class="form-label">Description de la collection</label>
+        <textarea
+          formControlName="description"
+          class="form-control"
+          id="inputDescription"
+          rows="3"
+          placeholder="Entrez la description"
+          [ngClass]="{
+            'is-invalid': addCollectionGroup.get('description')?.invalid && addCollectionGroup.get('description')?.touched
+          }"
+        ></textarea>
+        <div *ngIf="addCollectionGroup.get('description')?.invalid && addCollectionGroup.get('description')?.touched" class="invalid-feedback">
+          <div *ngIf="addCollectionGroup.get('description')?.errors?.['required']">
+            La description est obligatoire.
+          </div>
+          <div *ngIf="addCollectionGroup.get('description')?.errors?.['minlength']">
+            La description doit contenir au moins 3 caractères.
+          </div>
+        </div>
+      </div>
+
+
+      <button type="button" class="btn btn-secondary mb-3" (click)="openImageDialog()">Ajouter une image</button>
+
+      <button type="submit" class="btn btn-success w-100 " [disabled]="addCollectionGroup.invalid">
+        Ajouter la collection
+      </button>
+    </form>
+  </div>

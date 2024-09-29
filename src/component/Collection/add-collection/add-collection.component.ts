@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, Inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { Collection } from '../../../utils/interface/Collection';
 import { Router, RouterLink } from '@angular/router';
@@ -7,13 +7,15 @@ import { ImageUploadComponent } from '../../image/image-upload/image-upload.comp
 
 import { imageCollectionId } from '../../../utils/interface/imageCollectionId';
 import { Url } from '../../../utils/interface/Url';
-import { MatDialog } from '@angular/material/dialog';
-import { ImageSliderModelComponent } from '../../Model/image-slider-model/image-slider-model.component';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AuthService } from '../../../services/auth.service';
+import { CollectionToUser } from '../../../utils/interface/CollectionToUser';
+import { NgClass, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-add-collection',
   standalone: true,
-  imports: [RouterLink,ReactiveFormsModule,ImageUploadComponent],
+  imports: [RouterLink,ReactiveFormsModule,ImageUploadComponent,NgIf,NgClass],
   templateUrl: './add-collection.component.html',
   styleUrl: './add-collection.component.css'
 })
@@ -21,11 +23,23 @@ export class AddCollectionComponent {
   imageUrl!: Url | void;
 
   addCollectionGroup = new FormGroup({
-    name : new FormControl<string>(""),
-    description : new FormControl<string>(""),
+    name : new FormControl<string>("",[
+      Validators.required,
+      Validators.minLength(3)
+    ]),
+    description : new FormControl<string>("",[
+      Validators.required,
+      Validators.minLength(3)
+    ]),
   })
 
-  constructor(private api : ApiService, private router : Router, public dialog : MatDialog){}
+  constructor(private api : ApiService, 
+     private router : Router,
+     public dialog : MatDialog,
+     private auth : AuthService,
+     public dialogRef: MatDialogRef<AddCollectionComponent>,
+     @Inject(MAT_DIALOG_DATA) public data : any
+    ){}
   collection : Collection={
     id: 0,
     name: "",
@@ -50,14 +64,23 @@ export class AddCollectionComponent {
   }
 
   onSubmit(){
-    if(this.collection){
-      if(!this.addCollectionGroup.value.name)return;
-      if(!this.addCollectionGroup.value.description)return;
-
-      this.collection.name = this.addCollectionGroup.value.name;
-      this.collection.description = this.addCollectionGroup.value.description;
+      if(this.addCollectionGroup.invalid){
+        return
+      }
+      this.collection.name = this.addCollectionGroup.value.name!;
+      this.collection.description = this.addCollectionGroup.value.description!;
       
-      this.api.postCollection(this.collection)
+      const token = this.auth.getPayload()
+      if(!token){
+        return 
+      }
+      const postCollection : CollectionToUser = {
+        userId: token.id,
+        name: this.collection.name,
+        description: this.collection.description
+      }
+      console.log(postCollection)
+      this.api.postCollectionToUser(postCollection)
       .then(collection=>{
         if(this.imageUrl){
         const imageCollectionId : imageCollectionId = {
@@ -66,11 +89,7 @@ export class AddCollectionComponent {
         }
         this.api.postimageToCollection(imageCollectionId)
       }
-      this.router.navigateByUrl("/collections")
+      this.dialogRef.close()
       })
-
-    }
   }
-
-
 }

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators, ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { Caracteristique } from '../../../utils/interface/Caracteristique';
 import { CaracteristiqueToModel } from '../../../utils/interface/CaracteristiqueToModel';
@@ -18,38 +18,43 @@ import { NgFor } from '@angular/common';
 })
 export class UpdateComponentComponent {
   
-  constructor(private api : ApiService, public dialogRef: MatDialogRef<UpdateComponentComponent>,
-    @Inject(MAT_DIALOG_DATA) public data : any){
+  constructor(
+    private api: ApiService, 
+    public dialogRef: MatDialogRef<UpdateComponentComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private fb: FormBuilder
+  ) {}
 
-    }
-  ngOnInit(){
-    this.loadData();
-   
-  }
+  currentPage: number = 0;
+  pageSize: number = 2;
 
-  async loadData() {
-    await this.getContent(this.data.modelId)
-    await this.getCaracteristique(this.data.modelId)
-  }
-  caracteristique  : Caracteristique[] = [{
+  caracteristique: Caracteristique[] = [{
     title: '',
     subtitle: '',
     id: 0
-  }]
-  contents : Content [] = []
-  model!: Model; 
+  }];
+  
+  contents: Content[] = [];
+  model!: Model;
+
 
   caracteristiqueForm = new FormGroup({
     title: new FormControl("", [Validators.required, Validators.minLength(1)]),
     subtitle: new FormControl("", [Validators.required])
   });
 
-  contentForms: FormGroup[] = this.contents.map(content =>
-    new FormGroup({
-      title: new FormControl(content.title, [Validators.required]),
-      text: new FormControl(content.text, [Validators.required])
-    })
-  );
+
+  contentForms: FormGroup[] = [];
+
+  ngOnInit() {
+    this.loadData();
+  }
+
+
+  async loadData() {
+    await this.getContent(this.data.modelId);
+    await this.getCaracteristique(this.data.modelId);
+  }
 
   saveChanges(): void {
     if (this.caracteristiqueForm) {
@@ -58,64 +63,79 @@ export class UpdateComponentComponent {
       console.log("Form Values: ", this.caracteristiqueForm.value);
       this.updateCaracteristique(this.caracteristique[0]);
     }
-  
+
     this.contentForms.forEach((form, index) => {
       if (form) {
         this.contents[index].title = form.get('title')?.value!;
         this.contents[index].text = form.get('text')?.value!;
-      
         this.updateContent(this.contents[index]);
       }
     });
-  
+
     this.dialogRef.close();
   }
 
+  get paginatedContentForms(): FormGroup[] {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    return this.contentForms.slice(startIndex, endIndex);
+  }
 
-//caracteristique
-public addCaracteristique(caracteristique : CaracteristiqueToModel){
-  return this.api.postCaracteristiqueToModel(caracteristique)
-}
 
-public async getCaracteristique(modelId : number){
-  await this.api.getCaracteristiqueByModel(modelId)
-  .then(caracteristique=>{
-    this.caracteristique = caracteristique
+  totalPages(): number {
+    return Math.ceil(this.contentForms.length / this.pageSize);
+  }
 
-    if (this.caracteristique) {
-      this.caracteristiqueForm.patchValue({
-        title: this.caracteristique[0].title,
-        subtitle: this.caracteristique[0].subtitle
-      });
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages() - 1) {
+      this.currentPage++;
     }
+  }
 
-  })
-}
+  previousPage(): void {
+    if (this.currentPage > 0) {
+      this.currentPage--;
+    }
+  }
 
-public async updateCaracteristique(caracteristique : Caracteristique){
-  await this.api.updateCaracteristique(caracteristique)
-}
+
+  public async getCaracteristique(modelId: number) {
+    await this.api.getCaracteristiqueByModel(modelId)
+      .then(caracteristique => {
+        this.caracteristique = caracteristique;
+
+        if (this.caracteristique) {
+          this.caracteristiqueForm.patchValue({
+            title: this.caracteristique[0].title,
+            subtitle: this.caracteristique[0].subtitle
+          });
+        }
+      });
+  }
 
 
-//Content
+  public async updateCaracteristique(caracteristique: Caracteristique) {
+    await this.api.updateCaracteristique(caracteristique);
+  }
 
-public async getContent(modelId : number){
-  await this.api.getContentByModel(modelId)
-  .then(contents=>{
- 
-    this.contents = contents
-    console.log(contents)
-    this.contentForms = this.contents.map(content =>
-      new FormGroup({
-        title: new FormControl(content.title, [Validators.required]),
-        text: new FormControl(content.text, [Validators.required])
-      })
-    );
-  })
-}
 
-public async updateContent(content : Content){
-  await this.api.updateContent(content)
-}
+  public async getContent(modelId: number) {
+    await this.api.getContentByModel(modelId)
+      .then(contents => {
+        this.contents = contents;
+        this.contentForms = this.contents.map(content =>
+          new FormGroup({
+            title: new FormControl(content.title, [Validators.required]),
+            text: new FormControl(content.text, [Validators.required])
+          })
+        );
+      });
+  }
+
+
+  public async updateContent(content: Content) {
+    await this.api.updateContent(content);
+  }
 
 }

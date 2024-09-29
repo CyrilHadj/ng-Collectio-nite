@@ -1,14 +1,27 @@
-<button (click)="openImageDialog()">ouvrir image</button>
+<div class="card p-4 shadow-lg">
+
+<h1 class="text-center mb-4">Ajouter un élément</h1>
 
 <form [formGroup]="addItemGroup" (ngSubmit)="onSubmit()">
-  <label for="inputName">Name</label>
-  <input
-    formControlName="name"
-    type="text"
-    class="form-control"
-    id="inputName"
-    placeholder="name"
-  />
-
-  <button type="submit" class="button-style">Add item</button>
+  <div class="mb-3">
+    <label for="inputName">Name</label>
+    <input
+      formControlName="name"
+      type="text"
+      class="form-control"
+      id="inputName"
+      placeholder="name"
+    />
+    <div *ngIf="addItemGroup.get('description')?.invalid && addItemGroup.get('description')?.touched" class="invalid-feedback">
+      <div *ngIf="addItemGroup.get('description')?.errors?.['required']">
+        La description est obligatoire.
+      </div>
+      <div *ngIf="addItemGroup.get('description')?.errors?.['minlength']">
+        La description doit contenir au moins 3 caractères.
+      </div>
+    </div>
+  </div>
+  <button type="button" class="btn btn-secondary mb-3" (click)="openImageDialog()">Ajouter une image</button>
+  <button type="submit" class="button-style btn btn-success w-100">Ajouter l'élément</button>
 </form>
+</div>

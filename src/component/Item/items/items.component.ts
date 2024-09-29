@@ -15,12 +15,17 @@ import { CategoryAndItemId } from '../../../utils/interface/CategoryAndItemId';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ImageUploadComponent } from '../../image/image-upload/image-upload.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AddCategoryComponent } from '../../category/add-category/add-category.component';
+import { NgFor } from '@angular/common';
+import { AddCategoryItemComponent } from '../../category/add-category-item/add-category-item.component';
+import { AuthService } from '../../../services/auth.service';
+import { UpdateCategoryComponent } from '../../category/update-category/update-category.component';
 
 @Component({
   selector: 'app-items',
   standalone: true,
   imports: [
-    
+    NgFor,
     RouterModule,
     MatFormFieldModule,
     MatInputModule,
@@ -28,7 +33,8 @@ import { MatDialog } from '@angular/material/dialog';
     MatButtonModule,
     AddItemComponent,
     UpdateItemComponent,
-    UpdateCollectionComponent
+    UpdateCollectionComponent,
+    AddCategoryComponent
 ],
 
   templateUrl: './items.component.html',
@@ -38,16 +44,17 @@ export class ItemsComponent {
 
   constructor(
     private api : ApiService,
-     private router : Router,
-     private sanitizer : DomSanitizer,
-     public dialog : MatDialog
+    private auth : AuthService,
+    private router : Router,
+    private sanitizer : DomSanitizer,
+    public dialog : MatDialog
     ){}
 
   categories : Category[] = [];
   items : Item[] = [];
   collection!: Collection;
 
-   // Stocker les URLs d'images avec l'ID de la collection comme clé
+
    imageUrls: { [key: number]: SafeUrl } = {};  
 
    
@@ -55,7 +62,18 @@ export class ItemsComponent {
      this.getCategories()
    
     }
-    
+
+    openAddCategoryormDialog() {
+      const dialogRef = this.dialog.open(AddCategoryComponent,{
+        width: "50vw",
+        data : {collectionId : this.collection.id}
+      })
+      dialogRef.afterClosed().subscribe(result =>{
+        this.getCategories()
+        this.loadItemsAndImages(this.collection.id);
+      })
+    }
+
     openAddItemFormDialog() {
       const dialogRef = this.dialog.open(AddItemComponent,{
         width: "50vw",
@@ -66,12 +84,41 @@ export class ItemsComponent {
       })
     }
   
+    openAddCategoryToItemFormDialog(itemId : number) {
+      const dialogRef = this.dialog.open(AddCategoryItemComponent,{
+        width: "50vw",
+        data : {collectionId : this.collection.id, itemId : itemId}
+      })
+      dialogRef.afterClosed().subscribe(result =>{
+        this.loadItemsAndImages(this.collection.id);
+      })
+    }
+
+    openUpdateCategoryFormDialog(categoryId : number) {
+      const dialogRef = this.dialog.open(UpdateCategoryComponent,{
+        width: "50vw",
+        data : {collectionId : this.collection.id, categoryId : categoryId}
+      })
+      dialogRef.afterClosed().subscribe(result =>{
+        this.getCategories()
+        this.loadItemsAndImages(this.collection.id);
+      })
+    }
+  
+    openUpdateItemFormDialog(itemId : number) {
+      const dialogRef = this.dialog.open(UpdateItemComponent,{
+        width: "50vw",
+        data : {collectionId : this.collection.id, itemId : itemId}
+      })
+      dialogRef.afterClosed().subscribe(result =>{
+        this.loadItemsAndImages(this.collection.id);
+      })
+    }
+  
     public async getItemImage(itemId : number){
-      try{
+    try{
       const image = await this.api.getImageByItem(itemId)
-      console.log(image[0].url)
       const SafeUrl = this.sanitizer.bypassSecurityTrustUrl(image[0].url);
-      console.log(SafeUrl)
       return SafeUrl;
     }catch(error){
       console.log("an error has occured" + error)
@@ -121,7 +168,12 @@ export class ItemsComponent {
     }
     
     public getCategories(){
-      this.api.getCategories().then(categories =>{
+      const token = this.auth.getPayload()
+      if(!token){
+        return
+      }
+      this.api.getCategoryByUser(token.id)
+      .then((categories)=>{
         this.categories = categories
       })
     }

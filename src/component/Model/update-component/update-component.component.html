@@ -1,34 +1,37 @@
+<div class="card p-4 shadow-lg">
+  <h1 class="text-center mb-4">Modifier contenu</h1>
+
+  <form [formGroup]="caracteristiqueForm" (ngSubmit)="saveChanges()">
 
 
-    <form [formGroup]="caracteristiqueForm" (ngSubmit)="saveChanges()">
+    <label for="inputTitle">Titre :</label>
+    <input formControlName="title" type="text" class="form-control" id="inputTitle" />
 
-      <label for="inputTitle">Title :</label>
-      <input
-        formControlName="title"
-        type="text"
-        class="form-control"
-        id="inputTitle"
+    <label for="inputSubtitle">Sous titre :</label>
+    <input formControlName="subtitle" type="text" class="form-control" id="inputSubtitle" />
 
-      />
-      <label for="inputSubtitle">Subtitle :</label>
-      <input
-        formControlName="subtitle"
-        type="text"
-        class="form-control"
-        id="inputsubtitle"
-      />
 
-      
-      
-      <div *ngFor="let contentForm of contentForms; let i = index" [formGroup]="contentForm">
-        <label for="title-{{i}}">Titre</label>
-        <input id="title-{{i}}" type="text" class="form-control" formControlName="title">
-      
-        <label for="text-{{i}}">Text</label>
-        <input id="text-{{i}}" type="text" class="form-control" formControlName="text">
-      </div>
+    <div class="border-top my-4"></div>
 
+
+    <div *ngFor="let contentForm of paginatedContentForms; let i = index" [formGroup]="contentForm">
+      <label for="title-{{i}}">Label {{ currentPage * pageSize + i + 1 }}</label>
+      <input id="title-{{i}}" type="text" class="form-control" formControlName="title" />
+
+      <label for="text-{{i}}">Contenu</label>
+      <input id="text-{{i}}" type="text" class="form-control" formControlName="text" />
+    </div>
+
+
+    <div class="pagination-controls mt-3 d-flex justify-content-center">
+      <button type="button" class="btn btn-primary" (click)="previousPage()" [disabled]="currentPage === 0">Précédent</button>
+      <span class="px-3">Page {{ currentPage + 1 }} / {{ totalPages() }}</span>
+      <button type="button" class="btn btn-primary" (click)="nextPage()" [disabled]="currentPage >= totalPages() - 1">Suivant</button>
+    </div>
+
+
+    <div class="d-flex justify-content-center">
       <button type="submit" class="btn btn-success mt-3">Enregistrer</button>
-    </form>
-
-  
+    </div>
+  </form>
+</div>

@@ -9,11 +9,12 @@ import { Url } from '../../../utils/interface/Url';
 import { imageItemId } from '../../../utils/interface/imageItemId';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ImageSliderModelComponent } from '../../Model/image-slider-model/image-slider-model.component';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-add-item',
   standalone: true,
-  imports: [ReactiveFormsModule,ImageUploadComponent],
+  imports: [ReactiveFormsModule,ImageUploadComponent,NgIf],
   templateUrl: './add-item.component.html',
   styleUrl: './add-item.component.css'
 })

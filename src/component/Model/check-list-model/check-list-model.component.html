@@ -1,41 +1,62 @@
-<div class="container checklist-container">
-    <!-- Boutons de filtre -->
-    <div class="btn-group my-4" role="group" aria-label="Filter buttons">
-      <button type="button" class="btn" 
-              [class.active]="selectedFilter === 'all'" 
-              (click)="filterTasks('all')">Toute</button>
-      <button type="button" class="btn" 
-              [class.active]="selectedFilter === 'completed'" 
-              (click)="filterTasks('completed')">Terminé</button>
-      <button type="button" class="btn" 
-              [class.active]="selectedFilter === 'inProgress'" 
-              (click)="filterTasks('inProgress')">En cours</button>
+<div class="container d-flex justify-content-center align-items-center">
+  <div class="row justify-content-center composant">
+    
+    <div class="col-lg-4 col-md-4 mb-4 add-task-form d-flex justify-content-center align-items-center">
+      <div class="card shadow-sm p-4">
+        <h5 class="card-title">Ajouter une nouvelle tâche</h5>
+        <form [formGroup]="addTaskGroup" (ngSubmit)="newTaskSubmit()">
+          <div class="mb-3">
+            <label for="inputName" class="form-label">Titre de la tâche</label>
+            <input 
+              formControlName="title" 
+              type="text" 
+              class="form-control" 
+              id="inputName" 
+              placeholder="Entrez un titre">
+          </div>
+          <button type="submit" class="btn btn-success w-100">Ajouter</button>
+        </form>
+      </div>
     </div>
-  
-    <!-- Liste de tâches -->
-    <div class="row">
-      <div class="col-lg-6 col-md-6" *ngFor="let task of filteredTasks">
-        <div class="checklist-item d-flex align-items-center">
-          <input 
-            (change)="updateTask(task)"
-            type="checkbox" 
-            [(ngModel)]="task.completed"
-            id="{{task.id}}"
-           >
-          <label for="{{task.id}}">{{ task.title }}</label>
-          <button class="btn" (click)="deleteTask(task.id)">Supprimer</button>
+
+    <div class="col-lg-8 col-md-8 task-list">
+
+      <div class="d-flex justify-content-center mb-4">
+        <div class="btn-group" role="group" aria-label="Filter buttons">
+          <button type="button" class="btn btn-outline-primary" 
+                  [class.active]="selectedFilter === 'all'" 
+                  (click)="filterTasks('all')">Toute</button>
+          <button type="button" class="btn btn-outline-primary" 
+                  [class.active]="selectedFilter === 'completed'" 
+                  (click)="filterTasks('completed')">Terminé</button>
+          <button type="button" class="btn btn-outline-primary" 
+                  [class.active]="selectedFilter === 'inProgress'" 
+                  (click)="filterTasks('inProgress')">En cours</button>
+        </div>
+      </div>
+
+
+      <div class="row">
+        <div class="col-md-6 mb-3" *ngFor="let task of filteredTasks; let i = index">
+          <div class="list-group-item checklist-item d-flex align-items-center justify-content-between p-3 shadow-sm rounded">
+            <div class="form-check d-flex align-items-center">
+              <input 
+                (change)="updateTask(task)" 
+                type="checkbox" 
+                class="form-check-input me-3" 
+                [(ngModel)]="task.completed" 
+                id="{{task.id}}">
+              <label for="{{task.id}}" class="form-check-label">
+                {{ task.title }}
+              </label>
+            </div>
+            <div class="trash-icon" (click)="deleteTask(task.id)">
+              <i class="fa-solid fa-trash"></i>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <form [formGroup]="addTaskGroup" (ngSubmit)="newTaskSubmit()">
-    <label for="inputName">title : </label>
-    <input
-      formControlName="title"
-      type="text"
-      id="inputName"
-      placeholder="name"
-    >
-    <button type="submit" class="button-style">Ajouter une nouvelle tache</button>
-  </form>
+  </div>
+</div>

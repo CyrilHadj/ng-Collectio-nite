@@ -3,22 +3,30 @@ import { ApiService } from '../../../services/api.service';
 import { Collection } from '../../../utils/interface/Collection';
 import { RouterLink } from '@angular/router';
 import { Url } from '../../../utils/interface/Url';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AuthService } from '../../../services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddCollectionComponent } from '../add-collection/add-collection.component';
+import { UpdateCollectionComponent } from '../update-collection/update-collection.component';
 
 @Component({
   selector: 'app-collections',
   standalone: true,
-  imports: [RouterLink,AsyncPipe],
+  imports: [RouterLink,AsyncPipe,NgFor],
   templateUrl: './collections.component.html',
   styleUrl: './collections.component.css'
 })
 export class CollectionsComponent {
-  constructor(private api : ApiService,private sanitizer : DomSanitizer ){}
+  constructor(
+    private api : ApiService,
+    private sanitizer : DomSanitizer,
+    private auth : AuthService,
+    public dialog : MatDialog 
+    ){}
 
   collections : Collection[] = [];
 
-  // Stocker les URLs d'images avec l'ID de la collection comme clé
   imageUrls: { [key: number]: SafeUrl } = {};  
 
  ngOnInit() : void {
@@ -31,6 +39,40 @@ export class CollectionsComponent {
   })
    
   }
+  openAddCollectionDialog() {
+    const dialogRef = this.dialog.open(AddCollectionComponent,{
+      width: "50vw",
+      data : {}
+    })
+    dialogRef.afterClosed().subscribe(result =>{
+      this.getCollectionList()
+      .then(()=>{ 
+        this.collections.forEach(async collection=>{
+        const imageUrl = await this.getCollectionImage(collection.id)
+        this.imageUrls[collection.id] = imageUrl
+      })
+    })
+    })
+  }
+
+  openUpdateCollectionDialog(collectionId : number) {
+    const dialogRef = this.dialog.open(UpdateCollectionComponent,{
+      width: "50vw",
+      data : {id : collectionId}
+    })
+    dialogRef.afterClosed().subscribe(result =>{
+      this.getCollectionList()
+      .then(()=>{ 
+        this.collections.forEach(async collection=>{
+        const imageUrl = await this.getCollectionImage(collection.id)
+        this.imageUrls[collection.id] = imageUrl
+      })
+    })
+    })
+  }
+
+
+
 
   public async getCollectionImage(collectionId : number){
     const image = await this.api.getImageByCollection(collectionId);
@@ -39,10 +81,13 @@ export class CollectionsComponent {
   }
 
   private async getCollectionList(){
-    await this.api.getCollections()
-    .then(collections=>{
+    const collections = await this.auth.getUserCollection()
+    
+    if(collections !== null){
       this.collections = collections
-    })
+    }else{
+      return
+    }
   }
 
 

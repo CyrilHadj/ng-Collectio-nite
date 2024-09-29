@@ -29,8 +29,6 @@
   width: 70vw;
 }
 
-
-
 .carousel-item img {
   height: 100%;
   width: 100%;
@@ -50,8 +48,18 @@
     font-size: 24px;
     cursor: pointer;
     transition: color 0.3s ease;
+    z-index: 30;
   }
 
   .trash-icon:hover {
     color: red; 
+  }
+  
+  .btn-plus{
+    font-size: 40px;
+    cursor: pointer;
+  }
+
+  .btn-plus:hover {
+    color: #FFD700;
   }
